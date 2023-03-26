@@ -35,13 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 70,
-            ),
-            Image.asset("assets/images/iithindi logo word.png"),
-            const SizedBox(
-              height: 20,
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35.0),
               child: Center(
@@ -50,6 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       width: 400,
                       decoration: BoxDecoration(
+                        image: const DecorationImage(
+                            image: AssetImage('assets/images/image.jpg'),
+                            fit: BoxFit.cover),
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5.0),
                         //border corner radius
@@ -74,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   const Center(
                                       child: Text(
-                                    "Log in to Iithindi",
+                                    "Log in",
                                     style: TextStyle(fontSize: 18.0),
                                   )),
                                   SizedBox(
@@ -82,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   SizedBox(
                                     width: 350,
-                                    height: 50,
+                                    height: 40,
                                     child: TextFormField(
                                       controller:
                                           fieldStateManager.emailController,
@@ -121,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   SizedBox(
                                     width: 350.0,
-                                    height: 50.0,
+                                    height: 40.0,
                                     child: TextFormField(
                                       controller:
                                           fieldStateManager.passwordController,
@@ -160,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   SizedBox(
                                     width: 350,
-                                    height: 47,
+                                    height: 40,
                                     child: _loading.loadingRequest
                                         ? MaterialButton(
                                             mouseCursor:

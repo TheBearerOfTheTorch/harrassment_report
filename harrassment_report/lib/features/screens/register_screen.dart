@@ -151,20 +151,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Row(
                             children: [
                               Text(
-                                "Birthday",
-                                style: theme.subtitle2,
-                              ),
-                              IconButton(
-                                  color: Colors.black,
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                      Icons.assignment_late_outlined,
-                                      size: 15))
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
                                 "Gender",
                                 style: theme.subtitle2,
                               ),
@@ -204,17 +190,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 : MaterialButton(
                                     color: Colors.green,
                                     onPressed: () async {
-                                      print(field.regGenderController);
-                                      //validate fields
-                                      if (field.regYearOfBirthController ==
-                                          null) {
-                                        field.setIfDtateOfBirthIsNotFilled =
-                                            true;
-                                      } else {
-                                        field.setIfDtateOfBirthIsNotFilled =
-                                            false;
-                                      }
-
                                       if (fieldStateManager
                                               .regGenderController ==
                                           null) {
@@ -247,10 +222,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 .regFirstnameController.text,
                                             lastname: fieldStateManager
                                                 .regLastnameController.text,
-                                            birthday:
-                                                "${fieldStateManager.regYearOfBirthController}/"
-                                                "${fieldStateManager.regDayOfBirthController}/"
-                                                "${fieldStateManager.regMonthOfBirthController}",
                                             emailOrPhone: fieldStateManager
                                                 .regMobileNumberController.text,
                                             gender: fieldStateManager

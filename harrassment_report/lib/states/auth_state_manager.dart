@@ -39,7 +39,6 @@ class AuthenticationStateManager extends ChangeNotifier {
   Future signUpWithEmail(
       {required firstname,
       required lastname,
-      required birthday,
       required gender,
       required role,
       required emailOrPhone,
@@ -57,7 +56,6 @@ class AuthenticationStateManager extends ChangeNotifier {
           _firestore.collection('/users').doc(user.uid).set({
             'firstname': firstname,
             'lastname': lastname,
-            'birthday': birthday,
             'gender': gender,
             'email': emailOrPhone,
             'password': password,
