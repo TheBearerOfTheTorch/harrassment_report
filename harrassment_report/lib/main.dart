@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
           return Material(
             child: MaterialApp.router(
               theme: theme,
+              debugShowCheckedModeBanner: false,
               routerDelegate: router.routerDelegate,
               routeInformationParser: router.routeInformationParser,
             ),

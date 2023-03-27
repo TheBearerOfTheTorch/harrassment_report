@@ -4,6 +4,12 @@ import 'package:go_router/go_router.dart';
 import '../features/features.dart';
 
 class Routes {
+  static final login = GoRoute(
+      path: '/signin',
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return LoginScreen.page();
+      });
+
   static final splash = GoRoute(
       path: '/splash',
       pageBuilder: (BuildContext context, GoRouterState state) {
@@ -20,12 +26,6 @@ class Routes {
       path: '/wrapper',
       builder: (BuildContext context, GoRouterState state) {
         return const Wrapper();
-      });
-
-  static final login = GoRoute(
-      path: '/signin',
-      pageBuilder: (BuildContext context, GoRouterState state) {
-        return LoginScreen.page();
       });
 
   static final register = GoRoute(

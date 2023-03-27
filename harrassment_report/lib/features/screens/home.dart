@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Home extends StatelessWidget {
+import '../../states/states.dart';
+import '../features.dart';
+
+class Home extends StatefulWidget {
   const Home({super.key});
 
   static Page page({LocalKey? key}) {
@@ -8,9 +12,60 @@ class Home extends StatelessWidget {
   }
 
   @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  static List<Widget> pages = [
+    const HomePage(),
+    const UpdatePage(),
+    const ReportPage(),
+    const ProfilePage(),
+  ];
+  @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Home screen'),
-    );
+    return Consumer<StateManager>(builder: (context, stateManager, child) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("Dashboard"),
+          actions: <Widget>[
+            IconButton(
+              onPressed: () => context.read<StateManager>().logout(),
+              icon: const Icon(Icons.logout),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: IndexedStack(
+            index: stateManager.selectedTab,
+            children: pages,
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: stateManager.selectedTab,
+          onTap: stateManager.goToTab,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Theme.of(context).colorScheme.secondary,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today),
+              label: 'Update',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.star),
+              label: 'Report',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark),
+              label: 'Profile',
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

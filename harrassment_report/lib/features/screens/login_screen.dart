@@ -30,240 +30,249 @@ class _LoginScreenState extends State<LoginScreen> {
     final _error = Provider.of<ErrorStateManager>(context);
     final _auth = Provider.of<AuthenticationStateManager>(context);
 
-    return Scrollbar(
-      isAlwaysShown: true,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35.0),
-              child: Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 400,
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(
-                            image: AssetImage('assets/images/image.jpg'),
-                            fit: BoxFit.cover),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                        //border corner radius
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            //color of shadow
-                            blurRadius: 3,
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Consumer<FieldsStateManager>(
-                            builder: (context, fieldStateManager, child) {
-                          return Form(
-                              key: _formKey,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: size.height / 50,
-                                  ),
-                                  const Center(
-                                      child: Text(
-                                    "Log in",
-                                    style: TextStyle(fontSize: 18.0),
-                                  )),
-                                  SizedBox(
-                                    height: size.height / 25,
-                                  ),
-                                  SizedBox(
-                                    width: 350,
-                                    height: 40,
-                                    child: TextFormField(
-                                      controller:
-                                          fieldStateManager.emailController,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          Provider.of<FieldsStateManager>(
-                                                  context,
-                                                  listen: false)
-                                              .emailFilled = false;
-                                          return "Email or phone required";
-                                        } else {
-                                          Provider.of<FieldsStateManager>(
-                                                  context,
-                                                  listen: false)
-                                              .emailFilled = true;
-                                        }
-                                      },
-                                      decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFF707070),
-                                                width: .5)),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                            borderSide: const BorderSide(
-                                                color: Color(0xFF707070),
-                                                width: .5)),
-                                        hintText: "Email or Phone number",
-                                        hintStyle: const TextStyle(height: 0.5),
-                                      ),
+    return Scaffold(
+      body: Scrollbar(
+        isAlwaysShown: true,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 60),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                child: Center(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 400,
+                        decoration: BoxDecoration(
+                          // image: const DecorationImage(
+                          //     image: AssetImage('assets/images/image.jpg'),
+                          //     fit: BoxFit.cover),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5.0),
+                          //border corner radius
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              //color of shadow
+                              blurRadius: 3,
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Consumer<FieldsStateManager>(
+                              builder: (context, fieldStateManager, child) {
+                            return Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: size.height / 50,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: size.height / 60,
-                                  ),
-                                  SizedBox(
-                                    width: 350.0,
-                                    height: 40.0,
-                                    child: TextFormField(
-                                      controller:
-                                          fieldStateManager.passwordController,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          Provider.of<FieldsStateManager>(
-                                                  context,
-                                                  listen: false)
-                                              .passwordFilled = false;
-                                          return "Password required";
-                                        } else {
-                                          Provider.of<FieldsStateManager>(
-                                                  context,
-                                                  listen: false)
-                                              .passwordFilled = true;
-                                        }
-                                      },
-                                      obscureText: true,
-                                      decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFF707070),
-                                                width: .5)),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                            borderSide: const BorderSide(
-                                                color: Color(0xFF707070),
-                                                width: .5)),
-                                        hintText: "Password",
-                                      ),
+                                    const Center(
+                                        child: Text(
+                                      "Log in",
+                                      style: TextStyle(fontSize: 18.0),
+                                    )),
+                                    SizedBox(
+                                      height: size.height / 25,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: size.height / 55,
-                                  ),
-                                  SizedBox(
-                                    width: 350,
-                                    height: 40,
-                                    child: _loading.loadingRequest
-                                        ? MaterialButton(
-                                            mouseCursor:
-                                                MouseCursor.uncontrolled,
-                                            onPressed: () {},
-                                            child:
-                                                const CircularProgressIndicator
-                                                    .adaptive())
-                                        : MaterialButton(
-                                            color: Colors.red,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0)),
-                                            child: const Text(
-                                              'Log in',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            onPressed: () async {
-                                              if (_formKey.currentState!
-                                                  .validate()) {
-                                                //start loading spinner
-                                                _loading.isLoadingRequired =
-                                                    true;
-
-                                                //log in and get error
-                                                var errorValue =
-                                                    await _auth.signInWithEmail(
-                                                        email: fieldStateManager
-                                                            .emailController
-                                                            .text,
-                                                        password: fieldStateManager
-                                                            .passwordController
-                                                            .text);
-
-                                                //check error
-                                                if (errorValue != null) {
-                                                  _error.setIsAuthErrorFound =
-                                                      true;
-                                                  _error.setAuthErrorToErrorValue =
-                                                      errorValue;
-
-                                                  //printing out the error
-                                                  print(errorValue);
-                                                } else {
-                                                  //updating loggin state
-                                                  _authState.userLoggedIn =
-                                                      true;
-                                                }
-                                                _loading.isLoadingRequired =
-                                                    false;
-                                              }
-                                            },
-                                          ),
-                                  ),
-                                  SizedBox(
-                                    height: size.height / 50,
-                                  ),
-                                  TextButton(
-                                      onPressed: () {},
-                                      child: const Text(
-                                        "Forgot password?",
-                                        style: TextStyle(color: Colors.red),
-                                      )),
-                                  const Divider(
-                                    indent: 2,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  SizedBox(
-                                    height: 38,
-                                    child: MaterialButton(
-                                        color: Colors.green,
-                                        onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                const RegisterScreen(),
-                                          );
+                                    SizedBox(
+                                      width: 350,
+                                      height: 40,
+                                      child: TextFormField(
+                                        controller:
+                                            fieldStateManager.emailController,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            Provider.of<FieldsStateManager>(
+                                                    context,
+                                                    listen: false)
+                                                .emailFilled = false;
+                                            return "Email or phone required";
+                                          } else {
+                                            Provider.of<FieldsStateManager>(
+                                                    context,
+                                                    listen: false)
+                                                .emailFilled = true;
+                                          }
                                         },
+                                        decoration: InputDecoration(
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xFF707070),
+                                                      width: .5)),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              borderSide: const BorderSide(
+                                                  color: Color(0xFF707070),
+                                                  width: .5)),
+                                          hintText: "Email or Phone number",
+                                          hintStyle:
+                                              const TextStyle(height: 0.5),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: size.height / 60,
+                                    ),
+                                    SizedBox(
+                                      width: 350.0,
+                                      height: 40.0,
+                                      child: TextFormField(
+                                        controller: fieldStateManager
+                                            .passwordController,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            Provider.of<FieldsStateManager>(
+                                                    context,
+                                                    listen: false)
+                                                .passwordFilled = false;
+                                            return "Password required";
+                                          } else {
+                                            Provider.of<FieldsStateManager>(
+                                                    context,
+                                                    listen: false)
+                                                .passwordFilled = true;
+                                          }
+                                        },
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xFF707070),
+                                                      width: .5)),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              borderSide: const BorderSide(
+                                                  color: Color(0xFF707070),
+                                                  width: .5)),
+                                          hintText: "Password",
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: size.height / 55,
+                                    ),
+                                    SizedBox(
+                                      width: 350,
+                                      height: 40,
+                                      child: _loading.loadingRequest
+                                          ? MaterialButton(
+                                              mouseCursor:
+                                                  MouseCursor.uncontrolled,
+                                              onPressed: () {},
+                                              child:
+                                                  const CircularProgressIndicator
+                                                      .adaptive())
+                                          : MaterialButton(
+                                              color: Colors.red,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                              child: const Text(
+                                                'Log in',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              onPressed: () async {
+                                                if (_formKey.currentState!
+                                                    .validate()) {
+                                                  //start loading spinner
+                                                  _loading.isLoadingRequired =
+                                                      true;
+
+                                                  //log in and get error
+                                                  var errorValue = await _auth
+                                                      .signInWithEmail(
+                                                          email: fieldStateManager
+                                                              .emailController
+                                                              .text,
+                                                          password:
+                                                              fieldStateManager
+                                                                  .passwordController
+                                                                  .text);
+
+                                                  //check error
+                                                  if (errorValue != null) {
+                                                    _error.setIsAuthErrorFound =
+                                                        true;
+                                                    _error.setAuthErrorToErrorValue =
+                                                        errorValue;
+
+                                                    //printing out the error
+                                                    print(errorValue);
+                                                  } else {
+                                                    //updating loggin state
+                                                    _authState.userLoggedIn =
+                                                        true;
+                                                  }
+                                                  _loading.isLoadingRequired =
+                                                      false;
+                                                }
+                                              },
+                                            ),
+                                    ),
+                                    SizedBox(
+                                      height: size.height / 50,
+                                    ),
+                                    TextButton(
+                                        onPressed: () {},
                                         child: const Text(
-                                          "Create a new account",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
+                                          "Forgot password?",
+                                          style: TextStyle(color: Colors.red),
                                         )),
-                                  ),
-                                  const SizedBox(height: 10),
-                                ],
-                              ));
-                        }),
+                                    const Divider(
+                                      indent: 2,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    SizedBox(
+                                      height: 38,
+                                      child: MaterialButton(
+                                          color: Colors.green,
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  const RegisterScreen(),
+                                            );
+                                          },
+                                          child: const Text(
+                                            "Create a new account",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15),
+                                          )),
+                                    ),
+                                    const SizedBox(height: 10),
+                                  ],
+                                ));
+                          }),
+                        ),
                       ),
-                    ),
-                    // _error.isAuthErrorFound
-                    //     ? Positioned(
-                    //         top: 10,
-                    //         left: 110,
-                    //         child: ShowErrorAlert(
-                    //           errorValue: _error.getAuthErrorValue,
-                    //         ))
-                    //     : const Text(""),
-                  ],
+                      // _error.isAuthErrorFound
+                      //     ? Positioned(
+                      //         top: 10,
+                      //         left: 110,
+                      //         child: ShowErrorAlert(
+                      //           errorValue: _error.getAuthErrorValue,
+                      //         ))
+                      //     : const Text(""),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

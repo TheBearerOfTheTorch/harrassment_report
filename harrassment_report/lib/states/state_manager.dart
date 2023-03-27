@@ -1,4 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
+
+class ApodTab {
+  static const int home = 0;
+  static const int updates = 1;
+  static const int reports = 2;
+  static const int profile = 3;
+}
 
 class StateManager extends ChangeNotifier {
   //setter
@@ -7,6 +15,7 @@ class StateManager extends ChangeNotifier {
   bool _loggedOut = false;
   bool _registerPressed = false;
   bool _darkMode = false;
+  int _selectedTab = ApodTab.home;
 
   //getter
   bool get isInitialized => _initializeApp;
@@ -14,6 +23,10 @@ class StateManager extends ChangeNotifier {
   bool get isLoggedOut => _loggedOut;
   bool get darkMode => _darkMode;
   bool get registerPressed => _registerPressed;
+  int get selectedTab => _selectedTab;
+
+  final firebase_auth.FirebaseAuth _firebaseAuth =
+      firebase_auth.FirebaseAuth.instance;
 
   //initialApp
   void initializeApp() async {
@@ -43,4 +56,32 @@ class StateManager extends ChangeNotifier {
     _darkMode = darkMode;
     notifyListeners();
   }
+
+  String? authError;
+
+  void goToTab(index) {
+    _selectedTab = index;
+    notifyListeners();
+  }
+
+  /// Useful for deep links to a single tab. Should not be used
+  /// during normal navigation.
+  void silentlySetTab(int index) {
+    _selectedTab = index;
+  }
+
+  void goToUpdateReport() {
+    _selectedTab = ApodTab.updates;
+    notifyListeners();
+  }
+
+  void logout() async {
+    await _firebaseAuth.signOut();
+    _selectedTab = 0;
+
+    initializeApp();
+    notifyListeners();
+  }
 }
+
+final stateManager = StateManager();
