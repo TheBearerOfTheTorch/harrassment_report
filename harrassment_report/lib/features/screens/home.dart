@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
   static List<Widget> pages = [
     const HomePage(),
     const ReportPage(),
-    const ProfilePage(),
+    ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
