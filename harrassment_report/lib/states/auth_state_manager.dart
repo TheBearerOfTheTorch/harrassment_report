@@ -85,27 +85,6 @@ class AuthenticationStateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  // //sign user with phone number
-  // Future signInWithPhoneNumber(firstname,lastname,birthday,gender,role,password,phoneNumber) async{
-  //   final result = await _auth.signInWithPhoneNumber(phoneNumber);
-  //
-  //   //user
-  //   final User? user = result.confirm();
-  //
-  //   //saving to firestore collection
-  //   if (user != null) {
-  //     _firestore.collection('/users').doc(user.uid).set({
-  //       'firstname': firstname,
-  //       'lastname': lastname,
-  //       'birthday': birthday,
-  //       'gender':gender,
-  //       'email': email,
-  //       'password': password,
-  //       'userRole': role,
-  //     });
-  //   }
-  // }
-
   //login user
   Future signInWithEmail({email, password}) async {
     try {

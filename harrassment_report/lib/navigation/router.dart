@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:harrassment_report/navigation/navigation.dart';
+import 'package:provider/provider.dart';
 
 import '../features/features.dart';
 import '../states/states.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: Routes.splash.path,
+  initialLocation: Routes.index.path,
   routes: [
+    Routes.splash,
+    Routes.index,
     Routes.login,
     Routes.home,
   ],
@@ -15,21 +18,36 @@ final GoRouter router = GoRouter(
   // redirect: (BuildContext context, GoRouterState state) {
   //   return GoRouterRedirector.instance.redirect(state, stateManager);
   // },
+  redirect: (BuildContext context, GoRouterState state) {
+    return Checking.redirect(state, stateManager, context);
+  },
   errorBuilder: (context, state) {
     return const ErrorScreen();
   },
 );
+
+class Checking {
+  static String? redirect(
+      GoRouterState state, StateManager stateManager, context) {
+    if (!stateManager.isInitialized && !stateManager.isLoggedIn) {
+      return Uri(path: Routes.index.path).toString();
+    } else if (stateManager.isLoggedIn) {
+      return Uri(path: Routes.home.path).toString();
+    }
+    return null;
+  }
+}
 
 class GoRouterRedirector {
   const GoRouterRedirector(this._redirects);
   final List<Redirect> _redirects;
 
   static GoRouterRedirector get instance => GoRouterRedirector([
-        LoggedInRedirect(),
-        LoggedOutRedirect(),
         UninitializedRedirect(),
         OnInitializationRedirect(),
+        LoggedInRedirect(),
         UpdateHomeTabRedirect(),
+        LoggedOutRedirect(),
       ]);
 
   String? redirect(GoRouterState state, StateManager manager) {
@@ -83,7 +101,7 @@ class UninitializedRedirect extends Redirect {
     final queryParams = Map<String, String>.from(state.queryParams);
     queryParams['next'] = state.subloc;
     return Uri(
-      path: Routes.splash.path,
+      path: Routes.index.path,
       //queryParameters: queryParams,
     );
   }

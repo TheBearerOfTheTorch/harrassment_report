@@ -5,6 +5,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Home page"));
+    return Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Color(0xFF05182D),
+                Color(0xFF092A45),
+                Color(0xFF0D2339)
+              ]),
+        ),
+        child: Column(children: [
+          
+        ]));
   }
 }

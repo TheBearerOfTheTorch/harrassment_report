@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harrassment_report/navigation/navigation.dart';
 
 import '../features/features.dart';
 import '../states/states.dart';
@@ -50,7 +51,7 @@ class AppRouter extends RouterDelegate
       onPopPage: _handlePopPage,
 
       pages: [
-        if (!appStateManager.isInitialized) SplashScreen.page(),
+        if (!appStateManager.isInitialized) LandingPage.page(),
         if (appStateManager.isInitialized && !appStateManager.isLoggedIn)
           Wrapper.page(),
         if (appStateManager.isLoggedIn) Home.page(),
@@ -65,8 +66,8 @@ class AppRouter extends RouterDelegate
     }
 
     // poping and logging out
-    if (route.settings.name == "/") {
-      //appStateManager.logout();
+    if (route.settings.name == Routes.index.path) {
+      appStateManager.logout();
     }
     return true;
   }

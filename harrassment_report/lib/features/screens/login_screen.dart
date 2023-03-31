@@ -30,9 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
     final _error = Provider.of<ErrorStateManager>(context);
     final _auth = Provider.of<AuthenticationStateManager>(context);
 
+    ScrollController scroll = ScrollController();
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Scrollbar(
-        isAlwaysShown: true,
+        controller: scroll,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -45,11 +47,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       Container(
                         width: 400,
                         decoration: BoxDecoration(
-                          // image: const DecorationImage(
-                          //     image: AssetImage('assets/images/image.jpg'),
-                          //     fit: BoxFit.cover),
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(5.0),
+                          gradient: const LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [
+                                Color(0xFF05182D),
+                                Color(0xFF092A45),
+                                Color(0xFF0D2339)
+                              ]),
                           //border corner radius
                           boxShadow: [
                             BoxShadow(
@@ -70,11 +77,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                     SizedBox(
                                       height: size.height / 50,
                                     ),
-                                    const Center(
-                                        child: Text(
-                                      "Log in",
-                                      style: TextStyle(fontSize: 18.0),
-                                    )),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Center(
+                                            child: Text(
+                                          "Log in",
+                                          style: TextStyle(
+                                            color: Color(0xFF4481A6),
+                                            fontSize: 30,
+                                          ),
+                                        )),
+                                        GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Icon(Icons.cancel))
+                                      ],
+                                    ),
                                     SizedBox(
                                       height: size.height / 25,
                                     ),
@@ -99,6 +120,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           }
                                         },
                                         decoration: InputDecoration(
+                                          fillColor: const Color(0xFF05182D),
+                                          focusColor: const Color(0xFF05182D),
                                           focusedBorder:
                                               const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -171,7 +194,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   const CircularProgressIndicator
                                                       .adaptive())
                                           : MaterialButton(
-                                              color: Colors.red,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -238,7 +262,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     SizedBox(
                                       height: 38,
                                       child: MaterialButton(
-                                          color: Colors.green,
+                                          color: Theme.of(context)
+                                              .primaryColorDark,
                                           onPressed: () {
                                             showDialog(
                                               context: context,
@@ -259,14 +284,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           }),
                         ),
                       ),
-                      // _error.isAuthErrorFound
-                      //     ? Positioned(
-                      //         top: 10,
-                      //         left: 110,
-                      //         child: ShowErrorAlert(
-                      //           errorValue: _error.getAuthErrorValue,
-                      //         ))
-                      //     : const Text(""),
+                      _error.isAuthErrorFound
+                          ? Positioned(
+                              top: 10,
+                              left: 110,
+                              child: ShowErrorAlert(
+                                errorValue: _error.getAuthErrorValue,
+                              ))
+                          : const Text(""),
                     ],
                   ),
                 ),

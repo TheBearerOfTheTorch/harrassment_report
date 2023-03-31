@@ -18,7 +18,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   static List<Widget> pages = [
     const HomePage(),
-    const UpdatePage(),
     const ReportPage(),
     const ProfilePage(),
   ];
@@ -50,10 +49,6 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today),
-              label: 'Update',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.star),

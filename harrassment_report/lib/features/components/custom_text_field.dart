@@ -5,7 +5,7 @@ Widget customTextField(context,
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(5.0),
-      color: Colors.grey.shade100,
+      color: Color(0xFF0D2339),
     ),
     child: TextFormField(
       obscureText: obscureText,
@@ -26,9 +26,9 @@ Widget customTextField(context,
         label: Text(hintText),
         focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Color(0xFF707070), width: .5)),
-        focusColor: Colors.grey,
+        focusColor: Color(0xFF05182D),
         floatingLabelBehavior: FloatingLabelBehavior.values.first,
-        fillColor: Colors.grey,
+        fillColor: Color(0xFF05182D),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4),
             borderSide: const BorderSide(color: Color(0xFF707070), width: .5)),

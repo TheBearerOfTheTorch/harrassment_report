@@ -36,14 +36,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final error = Provider.of<ErrorStateManager>(context);
     final field = Provider.of<FieldsStateManager>(context);
 
+    ScrollController scroll = ScrollController();
+
+    final Shader iphoneShader =
+        const LinearGradient(colors: [Color(0xff070D14), Color(0xff85D1EE)])
+            .createShader(const Rect.fromLTWH(0, 100, 50, 2));
+
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Center(
         child: SingleChildScrollView(
+          controller: scroll,
           clipBehavior: Clip.hardEdge,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0), //border corner radius
+              //color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0),
+              gradient: const LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color(0xFF05182D),
+                    Color(0xFF092A45),
+                    Color(0xFF0D2339)
+                  ]), //border corner radius
               boxShadow: const [
                 BoxShadow(
                   color: Colors.grey, //color of shadow
@@ -52,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ],
             ),
             width: 450,
-            height: 500,
+            height: 450,
             child: Column(
               children: [
                 Padding(
@@ -60,14 +76,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Sign Up",
-                        style: AppTheme.lightTextTheme.headline1,
+                        style: TextStyle(
+                          color: Color(0xFF4481A6),
+                          fontSize: 30,
+                        ),
                       ),
                       GestureDetector(
                           onTap: () {
                             field.setIsGenderNull = false;
-                            field.setIfDtateOfBirthIsNotFilled = false;
                             Navigator.of(context).pop();
                           },
                           child: const Icon(Icons.cancel)),
@@ -189,7 +207,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       child: const CircularProgressIndicator(),
                                     )
                                   : MaterialButton(
-                                      color: Colors.green,
+                                      color: Theme.of(context).primaryColorDark,
                                       onPressed: () async {
                                         if (fieldStateManager
                                                 .regGenderController ==
@@ -203,17 +221,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         ///form validation
                                         if (_formKey.currentState!.validate()) {
                                           //checking birthday
-                                          if (field.regYearOfBirthController ==
-                                              null) {
-                                            field.setIfDtateOfBirthIsNotFilled =
-                                                true;
-                                          } else if (fieldStateManager
+                                          if (fieldStateManager
                                                   .regGenderController ==
                                               null) {
                                             field.setIsGenderNull = true;
                                           } else {
-                                            field.setIfDtateOfBirthIsNotFilled =
-                                                false;
                                             //laoding spinner to true
                                             loading.isLoadingRequired = true;
 
@@ -249,7 +261,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         style: theme2.headline2,
                                       )),
                             ),
-                            const SizedBox(height: 6),
                           ],
                         )),
                   );
