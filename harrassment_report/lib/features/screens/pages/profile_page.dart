@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
 
-  ScrollController scroll = ScrollController();
+  final ScrollController scroll = ScrollController();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
