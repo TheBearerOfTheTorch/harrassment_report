@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 
 class ApodTab {
   static const int home = 0;
@@ -80,6 +83,64 @@ class StateManager extends ChangeNotifier {
     _selectedTab = 0;
 
     initializeApp();
+    notifyListeners();
+  }
+
+  Future submitReport({phone, harassmentType, date, description}) async {
+    final FirebaseFirestore cloud = FirebaseFirestore.instance;
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+
+    //getting location
+    Location location = Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+
+    //saving details to database
+    //phone, harassmentType, date, description
+    try {
+      await cloud
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('report')
+          .add({
+        'harassmentType': harassmentType,
+        'date': date,
+        'description': description,
+        'location': _locationData
+      }).whenComplete(() async {
+        await cloud.collection('report').add({
+          'name': currentUser.displayName,
+          'email': currentUser.email,
+          'phone': phone,
+          'harassmentType': harassmentType,
+          'date': date,
+          'description': description,
+          'location': _locationData
+        });
+      });
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
     notifyListeners();
   }
 }

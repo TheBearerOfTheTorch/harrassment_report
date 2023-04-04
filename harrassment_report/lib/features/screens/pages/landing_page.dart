@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 
 import '../../features.dart';
 
@@ -125,22 +126,6 @@ class LandingPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Image.asset('images/figma.png',
-                                  width: 30, color: const Color(0xff3095C3)),
-                              Image.asset('images/gimp.png',
-                                  width: 30, color: const Color(0xff3095C3)),
-                              Image.asset('images/ps.png',
-                                  width: 30, color: const Color(0xff3095C3)),
-                              Image.asset('images/xd.png',
-                                  width: 30, color: const Color(0xff3095C3)),
-                            ],
-                          ),
-                        ),
                         const SizedBox(height: 50),
                         Container(
                           height: 50,
@@ -166,9 +151,67 @@ class LandingPage extends StatelessWidget {
                         )
                       ],
                     ),
-                    const SizedBox(
-                      width: 600,
-                    )
+                    //im here bro
+                    SizedBox(
+                      width: 520,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 120),
+                            height: 350,
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: const Color(0xFF21A3E2)),
+                                borderRadius: BorderRadius.circular(50)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                children: const [
+                                  Text(
+                                    'WHAT CONSTITUES OF SEXUAL HARASSMENT?',
+                                    style: TextStyle(
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.bold,
+                                        shadows: [
+                                          Shadow(
+                                              offset: Offset(10, 10),
+                                              blurRadius: 20,
+                                              color: Colors.black),
+                                          Shadow(
+                                              offset: Offset(10, 10),
+                                              blurRadius: 20,
+                                              color: Colors.black12),
+                                        ]),
+                                  ),
+                                  SizedBox(height: 30),
+                                  Text(
+                                      'Failure to promote an employee or pass student who may have refused you a date. Inviting a subordinate out on a date after failure to get him/her to love you(particularly if the subordinate believes that the rejection may result in adverse actions',
+                                      style: TextStyle(
+                                          color: Color(0xFF4481A6),
+                                          fontSize: 20)),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Link(
+                            uri: Uri.parse(
+                                'https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fharrassment-report.appspot.com%2Fo%2FSEXUAL%2520HARASSMENT.docx%3Falt%3Dmedia%26token%3Dd8270a8e-ed32-40bb-a3ea-762f91bcdff6&wdOrigin=BROWSELINK'),
+                            target: LinkTarget.blank,
+                            builder: (BuildContext ctx, FollowLink? openLink) {
+                              return TextButton.icon(
+                                onPressed: openLink,
+                                label: const Text('Read More....',
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 166, 68, 68),
+                                        fontSize: 20)),
+                                icon: const Icon(Icons.read_more),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 )
               ],

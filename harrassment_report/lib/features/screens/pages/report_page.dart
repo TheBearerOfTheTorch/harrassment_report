@@ -1,10 +1,236 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ReportPage extends StatelessWidget {
+import '../../../states/states.dart';
+
+class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
 
   @override
+  State<ReportPage> createState() => _ReportPageState();
+}
+
+class _ReportPageState extends State<ReportPage> {
+  TextEditingController phone = TextEditingController();
+  TextEditingController harassmentType = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController location = TextEditingController();
+  TextEditingController description = TextEditingController();
+
+  final key = GlobalKey<FormState>();
+  String dropItem = 'Select harassment type';
+  List items = [
+    'Unwanted touching',
+    'Sexually explicit gestures',
+    'Requests for sexual favors',
+    'Catcalling'
+  ];
+
+  bool loading = false;
+
+  @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Report page"));
+    //final loading = Provider.of<LoadingStateManager>(context);
+    final stateManagement = Provider.of<StateManager>(context);
+    return Center(
+        child: Container(
+            margin: const EdgeInsets.only(top: 30),
+            width: 400,
+            height: 420,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 60, 143, 129),
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color.fromARGB(255, 60, 143, 129), //color of shadow
+                  blurRadius: 3,
+                ),
+              ],
+            ),
+            child: Column(children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      "Report Harassment",
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 35),
+              Form(
+                  key: key,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: 300,
+                        height: 35,
+                        child: TextFormField(
+                          controller: phone,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Phone required";
+                            } else {
+                              return null;
+                            }
+                          },
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xFF707070), width: .5)),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 247, 244, 244),
+                                    width: .5)),
+                            hintText: "Phone number",
+                            hintStyle: const TextStyle(height: 0.5),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      // SizedBox(
+                      //     height: 35,
+                      //     width: 300,
+                      //     child: DropdownButton<String>(
+                      //         items:
+                      //             items.map<DropdownMenuItem<String>>((value) {
+                      //           return DropdownMenuItem(
+                      //               value: value, child: Text(value));
+                      //         }).toList(),
+                      //         onChanged: (item) {
+                      //           setState(() {
+                      //             dropItem = item!;
+                      //           });
+                      //         })),
+                      SizedBox(
+                          height: 35,
+                          width: 300,
+                          child: TextFormField(
+                            controller: harassmentType,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Harassment type required";
+                              } else {
+                                return null;
+                              }
+                            },
+                            decoration: InputDecoration(
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF707070), width: .5)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                  borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 247, 244, 244),
+                                      width: .5)),
+                              hintText: "Harassment type",
+                              hintStyle: const TextStyle(height: 0.5),
+                            ),
+                          )),
+                      const SizedBox(height: 14),
+                      SizedBox(
+                        width: 300,
+                        child: TextFormField(
+                          controller: dateController,
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xFF707070), width: .5)),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 247, 244, 244),
+                                    width: .5)),
+                            hintText: "Select date",
+                            hintStyle: const TextStyle(height: 0.5),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Date not set";
+                            } else {
+                              return null;
+                            }
+                          },
+                          onTap: () async {
+                            DateTime? date = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime(2100),
+                            );
+                            if (date != null) {
+                              dateController.text = date.toString();
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      SizedBox(
+                        width: 300,
+                        height: 100,
+                        child: TextFormField(
+                          controller: description,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "* required field";
+                            } else {
+                              return null;
+                            }
+                          },
+                          minLines: 2,
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xFF707070), width: .5)),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4),
+                                borderSide: const BorderSide(
+                                    color: Color(0xFF707070), width: .5)),
+                            hintText: "DESCRIPTION",
+                            hintStyle: const TextStyle(height: 0.5),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        height: 40,
+                        width: 150,
+                        child: loading
+                            ? const Center(child: CircularProgressIndicator())
+                            : MaterialButton(
+                                onPressed: () async {
+                                  if (key.currentState!.validate()) {
+                                    setState(() {
+                                      loading = true;
+                                    });
+
+                                    //sending report to the database
+                                    Future.delayed(const Duration(seconds: 4),
+                                        () {
+                                      stateManagement.submitReport(
+                                          phone: phone.text,
+                                          harassmentType: harassmentType.text,
+                                          date: dateController.text,
+                                          description: description.text);
+                                    });
+
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                  }
+                                },
+                                color: Colors.red,
+                                child: const Text('Submit report')),
+                      )
+                    ],
+                  )),
+            ])));
   }
 }

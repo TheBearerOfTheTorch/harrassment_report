@@ -33,12 +33,12 @@ class ProfilePage extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           gradient: const LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
                               colors: [
-                                Color(0xFF05182D),
-                                Color(0xFF092A45),
-                                Color(0xFF0D2339)
+                                Color.fromARGB(255, 26, 43, 61),
+                                Color.fromARGB(255, 3, 67, 119),
+                                Color.fromARGB(255, 17, 45, 73)
                               ]),
                           boxShadow: const [
                             BoxShadow(
@@ -52,7 +52,43 @@ class ProfilePage extends StatelessWidget {
                             Map<String, dynamic> data =
                                 e.data() as Map<String, dynamic>;
 
-                            return Text(data['firstname']);
+                            return Card(
+                                margin: const EdgeInsets.all(10),
+                                elevation: 3,
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      'PROFILE INFORMATION',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          data['firstname'],
+                                          style: const TextStyle(
+                                              color: Colors.black),
+                                        ),
+                                        Text(data['lastname'],
+                                            style: const TextStyle(
+                                                color: Colors.black)),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(data['gender'],
+                                        style: const TextStyle(
+                                            color: Colors.black)),
+                                    const SizedBox(height: 10),
+                                    Text(data['email'],
+                                        style: const TextStyle(
+                                            color: Colors.black)),
+                                  ],
+                                ));
                           }).toList(),
                         ))));
           }

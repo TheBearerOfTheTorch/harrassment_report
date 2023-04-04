@@ -84,7 +84,6 @@ class _MyAppState extends State<MyApp> {
               debugShowCheckedModeBanner: false,
               home: Router(
                 routerDelegate: _appRouter,
-                backButtonDispatcher: RootBackButtonDispatcher(),
               ),
             ),
           );
