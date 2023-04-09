@@ -69,7 +69,7 @@ class AppTheme {
 
   static ThemeData light() {
     return ThemeData(
-      primarySwatch: Colors.blue,
+      primarySwatch: Colors.red,
       brightness: Brightness.light,
       checkboxTheme: CheckboxThemeData(
         fillColor: MaterialStateColor.resolveWith(
@@ -87,7 +87,7 @@ class AppTheme {
         backgroundColor: Colors.black,
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Colors.red,
         unselectedItemColor: Colors.black54,
       ),
       textTheme: lightTextTheme,
@@ -96,7 +96,7 @@ class AppTheme {
 
   static ThemeData dark() {
     return ThemeData(
-      primarySwatch: Colors.blue,
+      primarySwatch: Colors.red,
       brightness: Brightness.dark,
       appBarTheme: AppBarTheme(
         foregroundColor: Colors.white,
@@ -104,11 +104,11 @@ class AppTheme {
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.red,
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         unselectedItemColor: Colors.white60,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Colors.red,
       ),
       textTheme: darkTextTheme,
     );

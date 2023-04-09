@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../navigation/navigation.dart';
 import '../../states/states.dart';
 import '../features.dart';
 import '../screens/admin/admin.dart';
@@ -44,7 +46,7 @@ class _WrapperState extends State<Wrapper> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData && snapshot.data != null) {
                         //print(user);
-                        checkingRole(user);
+                        checkingRole(user, context);
                       }
                       if (snapshot.hasError) {
                         return const Text("An unknown error has occured !");
@@ -66,7 +68,7 @@ class _WrapperState extends State<Wrapper> {
     });
   }
 
-  checkingRole(user) async {
+  checkingRole(user, context) async {
     if (user != null) {
       final DocumentSnapshot snap = await FirebaseFirestore.instance
           .collection("users")
@@ -77,20 +79,13 @@ class _WrapperState extends State<Wrapper> {
         role = snap['role'];
       });
 
-      if (role == 'admin') {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MainScreen()));
-        MainScreen();
+      if (role == 'investigator') {
+        GoRouter.of(context).go(Routes.counsels.path);
       }
 
       if (role == 'user') {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Home()));
+        GoRouter.of(context).go(Routes.home.path);
       }
-      // if (role == '') {
-      //   Navigator.pushReplacement(context,
-      //       MaterialPageRoute(builder: (context) => ServicesProvider()));
-      // }
     }
     return LandingPage();
   }

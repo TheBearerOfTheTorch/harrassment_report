@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../states/states.dart';
+
 ///Handle Authentication and Validation states
 class AuthenticationStateManager extends ChangeNotifier {
   //firebase instance
@@ -92,6 +94,7 @@ class AuthenticationStateManager extends ChangeNotifier {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
         User? user = value.user;
+        stateManager.userLoggedIn = true;
 
         //check if the email is verified
         if (!user!.emailVerified) {

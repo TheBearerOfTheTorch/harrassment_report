@@ -39,16 +39,16 @@ class _MyAppState extends State<MyApp> {
 
   late AppRouter _appRouter;
 
-  @override
-  void initState() {
-    super.initState();
-    _appRouter = AppRouter(
-        appStateManager: _stateManager,
-        fieldStateManager: _fieldStateManager,
-        authStateManager: _authStateManager,
-        loadingStateManager: _loadingStateManager,
-        errorStateManager: _errorStateManager);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _appRouter = AppRouter(
+  //       appStateManager: _stateManager,
+  //       fieldStateManager: _fieldStateManager,
+  //       authStateManager: _authStateManager,
+  //       loadingStateManager: _loadingStateManager,
+  //       errorStateManager: _errorStateManager);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,12 +79,14 @@ class _MyAppState extends State<MyApp> {
           }
 
           return Material(
-            child: MaterialApp(
+            child: MaterialApp.router(
               theme: theme,
               debugShowCheckedModeBanner: false,
-              home: Router(
-                routerDelegate: _appRouter,
-              ),
+              // home: Router(
+              //   routerDelegate: _appRouter,
+              // ),
+              routerDelegate: router.routerDelegate,
+              routeInformationParser: router.routeInformationParser,
             ),
           );
         },

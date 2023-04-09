@@ -221,6 +221,25 @@ class _ReportPageState extends State<ReportPage> {
                                           description: description.text);
                                     });
 
+                                    //alert when the report has been sent
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text("Alert"),
+                                          content: const Text(
+                                              "The report has been submitted successfully"),
+                                          actions: [
+                                            TextButton(
+                                              child: const Text("Close"),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
                                     setState(() {
                                       loading = false;
                                     });

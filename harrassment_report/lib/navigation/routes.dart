@@ -9,13 +9,8 @@ class Routes {
       pageBuilder: (BuildContext context, GoRouterState state) {
         return Home.page();
       });
-  static final admin = GoRoute(
-      path: '/admin',
-      pageBuilder: (BuildContext context, GoRouterState state) {
-        return MainScreen.page();
-      });
   static final counsels = GoRoute(
-      path: '/counselor',
+      path: '/investigator',
       pageBuilder: (BuildContext context, GoRouterState state) {
         return Counselor.page();
       });

@@ -11,6 +11,12 @@ class ApodTab {
   static const int profile = 3;
 }
 
+class InvestigatorTab {
+  static const int home = 0;
+  static const int notification = 1;
+  static const int graphs = 2;
+}
+
 class StateManager extends ChangeNotifier {
   //setter
   bool _initializeApp = false;
@@ -19,6 +25,7 @@ class StateManager extends ChangeNotifier {
   bool _registerPressed = false;
   bool _darkMode = false;
   int _selectedTab = ApodTab.home;
+  int _investigorSelectedTab = InvestigatorTab.home;
 
   //getter
   bool get isInitialized => _initializeApp;
@@ -27,6 +34,7 @@ class StateManager extends ChangeNotifier {
   bool get darkMode => _darkMode;
   bool get registerPressed => _registerPressed;
   int get selectedTab => _selectedTab;
+  int get investigatorTab => _investigorSelectedTab;
 
   final firebase_auth.FirebaseAuth _firebaseAuth =
       firebase_auth.FirebaseAuth.instance;
@@ -64,6 +72,11 @@ class StateManager extends ChangeNotifier {
 
   void goToTab(index) {
     _selectedTab = index;
+    notifyListeners();
+  }
+
+  void goToIvestigatorTab(index) {
+    _investigorSelectedTab = index;
     notifyListeners();
   }
 
