@@ -19,7 +19,7 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  String role = 'user';
+  
   bool isToggle = false;
   @override
   void initState() {
@@ -52,8 +52,10 @@ class _WrapperState extends State<Wrapper> {
                         return const Text("An unknown error has occured !");
                       }
                       if (snapshot.connectionState ==
-                          ConnectionState.waiting) {}
-                      return const Center(child: CircularProgressIndicator());
+                          ConnectionState.waiting) {
+                            return const Center(child: CircularProgressIndicator());
+                          }
+                      return Center(child: Text(snapshot.hasError.toString()));
                     });
               }
             }
@@ -68,23 +70,30 @@ class _WrapperState extends State<Wrapper> {
     });
   }
 
-  checkingRole(user, context) async {
+  checkingRole(User? user, context) async {
+    String role = 'user';
     if (user != null) {
       final DocumentSnapshot snap = await FirebaseFirestore.instance
           .collection("users")
           .doc(user.uid)
           .get();
 
+          
+
       setState(() {
-        role = snap['role'];
+        role = snap['userRole'];
       });
+      print(role);
+      Provider.of<StateManager>(context).userRole(role);
 
       if (role == 'investigator') {
-        GoRouter.of(context).go(Routes.counsels.path);
+        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Home()));
+        return Routes.counsels.path;
       }
 
       if (role == 'user') {
-        GoRouter.of(context).go(Routes.home.path);
+        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Home()));
+        return Routes.home.path;
       }
     }
     return LandingPage();

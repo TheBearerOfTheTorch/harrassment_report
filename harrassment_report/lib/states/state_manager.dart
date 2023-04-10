@@ -26,6 +26,7 @@ class StateManager extends ChangeNotifier {
   bool _darkMode = false;
   int _selectedTab = ApodTab.home;
   int _investigorSelectedTab = InvestigatorTab.home;
+  String _role = 'user';
 
   //getter
   bool get isInitialized => _initializeApp;
@@ -35,6 +36,7 @@ class StateManager extends ChangeNotifier {
   bool get registerPressed => _registerPressed;
   int get selectedTab => _selectedTab;
   int get investigatorTab => _investigorSelectedTab;
+  String get role => _role;
 
   final firebase_auth.FirebaseAuth _firebaseAuth =
       firebase_auth.FirebaseAuth.instance;
@@ -42,6 +44,11 @@ class StateManager extends ChangeNotifier {
   //initialApp
   void initializeApp() async {
     _initializeApp = true;
+    notifyListeners();
+  }
+
+  void userRole(role){
+    _role = role;
     notifyListeners();
   }
 
@@ -150,6 +157,28 @@ class StateManager extends ChangeNotifier {
           'location': _locationData
         });
       });
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+    notifyListeners();
+  }
+
+  Future submitAnonymousReport({phone, harassmentType, date, description}) async {
+    final FirebaseFirestore cloud = FirebaseFirestore.instance;
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+
+    try {
+        await cloud.collection('report').doc(phone).set({
+          'name': 'dfsfds',
+          'status': 'submitted',
+          'email': 'sdfsdfsd',
+          'phone': phone,
+          'harassmentType': harassmentType,
+          'date': date,
+          'description': description,
+          'location': '_locationData',
+        });
     } catch (e) {
       // ignore: avoid_print
       print(e);
