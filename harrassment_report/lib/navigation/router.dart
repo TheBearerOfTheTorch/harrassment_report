@@ -17,9 +17,8 @@ final GoRouter router = GoRouter(
     final stateManagerProvider = Provider.of<StateManager>(context);
     if (stateManagerProvider.isLoggedIn) {
       return Routes.home.path;
-      
     }
-    return Routes.home.path;
+    return Routes.index.path;
   },
   errorBuilder: (context, state) {
     return const ErrorScreen();
