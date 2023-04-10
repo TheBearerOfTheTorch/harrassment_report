@@ -29,6 +29,12 @@ class _HomeState extends State<Home> {
           title: const Text("Dashboard"),
           actions: <Widget>[
             IconButton(
+              onPressed: (){
+                
+              },
+              icon: const Icon(Icons.notification_add),
+            ),
+            IconButton(
               onPressed: () => context.read<StateManager>().logout(),
               icon: const Icon(Icons.logout),
             ),
@@ -55,8 +61,8 @@ class _HomeState extends State<Home> {
               label: 'Report',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark),
-              label: 'Profile',
+              icon: Icon(Icons.safety_check),
+              label: 'Report status',
             ),
           ],
         ),

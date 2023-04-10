@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,10 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     User? currentUser = _firebaseAuth.currentUser;
     final Stream<QuerySnapshot> _providerPick =
-        FirebaseFirestore.instance.collection('users').snapshots();
-    var userId = currentUser!.uid;
+        FirebaseFirestore.instance.collection('users').doc(currentUser!.uid).collection('report').snapshots();
+    
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('users').snapshots(),
+        stream: _providerPick,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -23,74 +24,133 @@ class ProfilePage extends StatelessWidget {
             );
           }
           if (snapshot.hasData) {
-            return Center(
-                child: SingleChildScrollView(
-                    controller: scroll,
-                    clipBehavior: Clip.hardEdge,
-                    child: Container(
-                        width: 400,
-                        height: 500,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          gradient: const LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                Color.fromARGB(255, 26, 43, 61),
-                                Color.fromARGB(255, 3, 67, 119),
-                                Color.fromARGB(255, 17, 45, 73)
-                              ]),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey, //color of shadow
-                              blurRadius: 3,
-                            ),
-                          ],
-                        ),
-                        child: ListView(
-                          children: snapshot.data!.docs.map((e) {
-                            Map<String, dynamic> data =
-                                e.data() as Map<String, dynamic>;
-
-                            return Card(
-                                margin: const EdgeInsets.all(10),
-                                elevation: 3,
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                      'PROFILE INFORMATION',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(width: 218,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Row(
+                    children: const [
+                      Text('Notifications', style: TextStyle(fontSize: 30)),
+                      Icon(Icons.arrow_right,size: 25,)
+                    ],
+                  ),
+                ),
+                ),
+                SizedBox(
+                  width: 600,
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: snapshot.data!.docs.map((e) {
+                      Map<String, dynamic> data =
+                          e.data() as Map<String, dynamic>;
+                  
+                      return Card(
+                        child: ListTile(
+                          onTap: (){
+                            showDialog(context: context, builder: (context){
+                              return AlertDialog(
+                                title: const Text('Report details'),
+                                content: SizedBox(
+                                  height: 400,
+                                  width: 400,
+                                  child: Column(
+                                    children: [
+                                    const SizedBox(height: 30),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Text(
-                                          data['firstname'],
-                                          style: const TextStyle(
-                                              color: Colors.black),
-                                        ),
-                                        Text(data['lastname'],
-                                            style: const TextStyle(
-                                                color: Colors.black)),
+                                        const Text('Offender: ',style: TextStyle(fontWeight: FontWeight.bold),),
+                                        AutoSizeText(
+                                      data['offender'],
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                       ],
                                     ),
-                                    const SizedBox(height: 10),
-                                    Text(data['gender'],
-                                        style: const TextStyle(
-                                            color: Colors.black)),
-                                    const SizedBox(height: 10),
-                                    Text(data['email'],
-                                        style: const TextStyle(
-                                            color: Colors.black)),
-                                  ],
-                                ));
-                          }).toList(),
-                        ))));
+                                    
+                                    const SizedBox(height: 15),
+
+                                    Row(
+                                      children: [
+                                        const Text('Location: ',style: TextStyle(fontWeight: FontWeight.bold),),
+                                        AutoSizeText(
+                                      data['location'],
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                      ],
+                                    ),
+                                    
+                                    const SizedBox(height: 15),
+                                    Row(
+                                      children: [
+                                        const Text('Harassment type: ',style: TextStyle(fontWeight: FontWeight.bold),),
+                                        AutoSizeText(
+                                      data['harassmentType'],
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                      ],
+                                    ),
+                                    
+                                    const SizedBox(height: 15),
+                                    Row(
+                                      children: [
+                                        const Text('Date: ',style: TextStyle(fontWeight: FontWeight.bold),),
+                                        AutoSizeText(
+                                      data['date'],
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                      ],
+                                    ),
+                                    
+                                    const SizedBox(height: 15),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text('Status: ',style: TextStyle(fontWeight: FontWeight.bold),),
+                                        Container(
+                                          height: 50,
+                                          width: 100,
+                                          color: data['status'] == 'submitted'? 
+                                          Colors.grey: data['status'] == 'underreview'?Colors.orange: 
+                                          data['status'] == 'hearing'?Colors.green: data['status'] == 'authority'?
+                                          Colors.blue: Colors.red,
+                                          child: Center(child: Text(data['status'])),
+                                    ),
+                                      ],
+                                    ),
+                                    
+                                    const SizedBox(height: 15),
+                                    const Text('Harassment Decription: ',style: TextStyle(fontWeight: FontWeight.bold),),
+                                    AutoSizeText(
+                                      data['description'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 8,
+                                    ),
+                                    const SizedBox(height: 15),
+                                  ]),
+                                ),
+                              );
+                            });
+                          },
+                          leading: Container(
+                            height: 40,
+                            width: 80,
+                            color: data['status'] == 'submitted'? 
+                                  Colors.grey: data['status'] == 'underreview'?Colors.orange: 
+                                  data['status'] == 'hearing'?Colors.green: data['status'] == 'authority'?
+                                  Colors.blue: Colors.red,
+                            child: Center(child: Text(data['status']))),
+                          title: Text(data['harassmentType']),
+                          subtitle: Text(data['offender']),
+                          trailing: Text(data['location']),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                const SizedBox(width: 50),
+              ],
+            );
           }
           return const Center(
               child: Text('Theres an error fetching profile date'));

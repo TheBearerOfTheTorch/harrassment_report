@@ -49,14 +49,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(5.0),
-                          gradient: const LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                              colors: [
-                                Color(0xFF05182D),
-                                Color(0xFF092A45),
-                                Color(0xFF0D2339)
-                              ]),
+                          // gradient: const LinearGradient(
+                          //     begin: Alignment.topRight,
+                          //     end: Alignment.bottomLeft,
+                          //     colors: [
+                          //       Color(0xFF05182D),
+                          //       Color(0xFF092A45),
+                          //       Color(0xFF0D2339)
+                          //     ]),
                           //border corner radius
                           boxShadow: [
                             BoxShadow(

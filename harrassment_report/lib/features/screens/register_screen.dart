@@ -50,16 +50,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           clipBehavior: Clip.hardEdge,
           child: Container(
             decoration: BoxDecoration(
-              //color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              gradient: const LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Color(0xFF05182D),
-                    Color(0xFF092A45),
-                    Color(0xFF0D2339)
-                  ]), //border corner radius
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(5.0),//border corner radius
               boxShadow: const [
                 BoxShadow(
                   color: Colors.grey, //color of shadow

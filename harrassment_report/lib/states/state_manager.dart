@@ -106,33 +106,9 @@ class StateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future submitReport({phone, harassmentType, date, description}) async {
+  Future submitReport({phone, harassmentType, date, description,offender, location}) async {
     final FirebaseFirestore cloud = FirebaseFirestore.instance;
     final User? currentUser = FirebaseAuth.instance.currentUser;
-
-    //getting location
-    Location location = Location();
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _locationData = await location.getLocation();
 
     //saving details to database
     //phone, harassmentType, date, description
@@ -145,16 +121,20 @@ class StateManager extends ChangeNotifier {
         'harassmentType': harassmentType,
         'date': date,
         'description': description,
-        'location': _locationData
+        'location': location,
+        'offender': offender,
+        'status': 'submitted',
       }).whenComplete(() async {
         await cloud.collection('report').add({
-          'name': currentUser.displayName,
+          'report_name': currentUser.displayName,
           'email': currentUser.email,
           'phone': phone,
+          'offender':offender,
           'harassmentType': harassmentType,
           'date': date,
           'description': description,
-          'location': _locationData
+          'location': location,
+          'status': 'submitted',
         });
       });
     } catch (e) {
@@ -164,20 +144,21 @@ class StateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future submitAnonymousReport({phone, harassmentType, date, description}) async {
+  Future submitAnonymousReport({offender, location, phone, harassmentType, date, description}) async {
     final FirebaseFirestore cloud = FirebaseFirestore.instance;
     final User? currentUser = FirebaseAuth.instance.currentUser;
 
+    bool loading = false;
+
     try {
         await cloud.collection('report').doc(phone).set({
-          'name': 'dfsfds',
           'status': 'submitted',
-          'email': 'sdfsdfsd',
           'phone': phone,
+          'offender':offender,
           'harassmentType': harassmentType,
           'date': date,
           'description': description,
-          'location': '_locationData',
+          'location': location,
         });
     } catch (e) {
       // ignore: avoid_print
@@ -185,6 +166,23 @@ class StateManager extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  // Future updateStatus({status}) async {
+  //   final FirebaseFirestore cloud = FirebaseFirestore.instance;
+  //   final User? currentUser = FirebaseAuth.instance.currentUser;
+
+  //   bool loading = false;
+
+  //   try {
+  //       await cloud.collection('report').doc(phone).update({
+  //         'status': 'submitted',
+  //       });
+  //   } catch (e) {
+  //     // ignore: avoid_print
+  //     print(e);
+  //   }
+  //   notifyListeners();
+  // }
 }
 
 final stateManager = StateManager();

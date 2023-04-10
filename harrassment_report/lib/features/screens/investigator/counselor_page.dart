@@ -32,7 +32,7 @@ class Counselor extends StatelessWidget {
         preferredSize: Size(size.width, 60),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Image.asset('assets/images/logo.png'),
+          Image.asset('assets/images/logo-bw-sml.png'),
           SizedBox(
             height: double.infinity,
             width: 600,

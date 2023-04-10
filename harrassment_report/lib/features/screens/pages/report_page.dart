@@ -14,8 +14,9 @@ class _ReportPageState extends State<ReportPage> {
   TextEditingController phone = TextEditingController();
   TextEditingController harassmentType = TextEditingController();
   TextEditingController dateController = TextEditingController();
-  TextEditingController location = TextEditingController();
+  TextEditingController offender = TextEditingController();
   TextEditingController description = TextEditingController();
+  TextEditingController location = TextEditingController();
 
   final key = GlobalKey<FormState>();
   String dropItem = 'Select harassment type';
@@ -36,16 +37,10 @@ class _ReportPageState extends State<ReportPage> {
         child: Container(
             margin: const EdgeInsets.only(top: 30),
             width: 400,
-            height: 420,
+            height: 500,
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 60, 143, 129),
               borderRadius: BorderRadius.circular(5),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color.fromARGB(255, 60, 143, 129), //color of shadow
-                  blurRadius: 3,
-                ),
-              ],
+              border: Border.all()
             ),
             child: Column(children: [
               Padding(
@@ -67,6 +62,60 @@ class _ReportPageState extends State<ReportPage> {
                   key: key,
                   child: Column(
                     children: [
+                      SizedBox(
+                        width: 300,
+                        height: 35,
+                        child: TextFormField(
+                          controller: offender,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Name required";
+                            } else {
+                              return null;
+                            }
+                          },
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xFF707070), width: .5)),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 247, 244, 244),
+                                    width: .5)),
+                            hintText: "Offenders name",
+                            hintStyle: const TextStyle(height: 0.5),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      SizedBox(
+                        width: 300,
+                        height: 35,
+                        child: TextFormField(
+                          controller: location,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Location required";
+                            } else {
+                              return null;
+                            }
+                          },
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xFF707070), width: .5)),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 247, 244, 244),
+                                    width: .5)),
+                            hintText: "Location required",
+                            hintStyle: const TextStyle(height: 0.5),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
                       SizedBox(
                         width: 300,
                         height: 35,
@@ -94,20 +143,6 @@ class _ReportPageState extends State<ReportPage> {
                         ),
                       ),
                       const SizedBox(height: 14),
-                      // SizedBox(
-                      //     height: 35,
-                      //     width: 300,
-                      //     child: DropdownButton<String>(
-                      //         items:
-                      //             items.map<DropdownMenuItem<String>>((value) {
-                      //           return DropdownMenuItem(
-                      //               value: value, child: Text(value));
-                      //         }).toList(),
-                      //         onChanged: (item) {
-                      //           setState(() {
-                      //             dropItem = item!;
-                      //           });
-                      //         })),
                       SizedBox(
                           height: 35,
                           width: 300,
@@ -211,18 +246,21 @@ class _ReportPageState extends State<ReportPage> {
                                       loading = true;
                                     });
 
-                                    //sending report to the database
-                                    Future.delayed(const Duration(seconds: 4),
-                                        () {
-                                      stateManagement.submitReport(
+                                    stateManagement.submitReport(
+                                        offender: offender.text,
                                           phone: phone.text,
+                                          location: location.text,
                                           harassmentType: harassmentType.text,
                                           date: dateController.text,
                                           description: description.text);
-                                    });
 
-                                    //alert when the report has been sent
-                                    showDialog(
+                                    //sending report to the database
+                                    Future.delayed(const Duration(seconds: 4),
+                                        () {
+                                          setState(() {
+                                      loading = false;
+                                    });
+                                          showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
@@ -240,8 +278,7 @@ class _ReportPageState extends State<ReportPage> {
                                         );
                                       },
                                     );
-                                    setState(() {
-                                      loading = false;
+                                          
                                     });
                                   }
                                 },

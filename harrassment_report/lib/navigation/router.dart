@@ -19,7 +19,7 @@ final GoRouter router = GoRouter(
       return Routes.home.path;
       
     }
-    return Routes.index.path;
+    return Routes.home.path;
   },
   errorBuilder: (context, state) {
     return const ErrorScreen();

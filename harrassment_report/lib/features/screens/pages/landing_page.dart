@@ -25,6 +25,7 @@ class _LandingPageState extends State<LandingPage> {
   TextEditingController location = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController progressController = TextEditingController();
+  TextEditingController offender = TextEditingController();
 
   bool loading = false;
   final key = GlobalKey<FormState>();
@@ -504,6 +505,60 @@ class _LandingPageState extends State<LandingPage> {
               width: 300,
               height: 35,
               child: TextFormField(
+                controller: offender,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "offender name required";
+                  } else {
+                    return null;
+                  }
+                },
+                decoration: InputDecoration(
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xFF707070), width: .5)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4),
+                      borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 247, 244, 244),
+                          width: .5)),
+                  hintText: "Offendrs name",
+                  hintStyle: const TextStyle(height: 0.5),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 300,
+              height: 35,
+              child: TextFormField(
+                controller: location,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Location required";
+                  } else {
+                    return null;
+                  }
+                },
+                decoration: InputDecoration(
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xFF707070), width: .5)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4),
+                      borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 247, 244, 244),
+                          width: .5)),
+                  hintText: "Harassment location",
+                  hintStyle: const TextStyle(height: 0.5),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 300,
+              height: 35,
+              child: TextFormField(
                 controller: phone,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -630,16 +685,24 @@ class _LandingPageState extends State<LandingPage> {
                             loading = true;
                           });
 
-                          //sending report to the database
-                          Future.delayed(const Duration(seconds: 4), () {
-                            stateManager.submitAnonymousReport(
+                          stateManager.submitAnonymousReport(
+                              location: location.text,
+                              offender: offender.text,
                                 phone: phone.text,
                                 harassmentType: harassmentType.text,
                                 date: dateController.text,
                                 description: description.text);
-                          });
 
-                          //alert when the report has been sent
+                          //sending report to the database
+                          Future.delayed(const Duration(seconds: 4), () {
+
+                            
+                          
+                          setState(() {
+                            loading = false;
+                          });
+                          
+                            //alert when the report has been sent
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -658,9 +721,8 @@ class _LandingPageState extends State<LandingPage> {
                               );
                             },
                           );
-                          setState(() {
-                            loading = false;
                           });
+
                         }
                       },
                       child: const Text('Submit report')),
