@@ -54,7 +54,10 @@ class _LandingPageState extends State<LandingPage> {
                   child: Row(
                     children: [
                       Image.asset('assets/images/logo.jpeg'),
-                      Text('Report Harassment',style: Theme.of(context).textTheme.headlineLarge,)
+                      Text(
+                        'Report Harassment',
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      )
                     ],
                   )),
               const SizedBox(
@@ -74,15 +77,21 @@ class _LandingPageState extends State<LandingPage> {
                           color: Color.fromARGB(255, 65, 90, 117),
                         ),
                       ),
-                      icon: const Icon(Icons.arrow_drop_down_sharp,color: Color.fromARGB(255, 65, 90, 117),size: 33,),
+                      icon: const Icon(
+                        Icons.arrow_drop_down_sharp,
+                        color: Color.fromARGB(255, 65, 90, 117),
+                        size: 33,
+                      ),
                     ),
                     const SizedBox(width: 40),
                     TextButton.icon(
-                      icon: const Icon(Icons.arrow_drop_down_sharp,color: Color.fromARGB(255, 65, 90, 117),size: 33),
+                      icon: const Icon(Icons.arrow_drop_down_sharp,
+                          color: Color.fromARGB(255, 65, 90, 117), size: 33),
                       onPressed: () {
                         showDialog(
                           context: context,
-                          builder: (BuildContext context) => const LoginScreen(),
+                          builder: (BuildContext context) =>
+                              const LoginScreen(),
                         );
                       },
                       label: const Text(
@@ -95,7 +104,8 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                     const SizedBox(width: 40),
                     TextButton.icon(
-                      icon: const Icon(Icons.arrow_drop_down_sharp,color: Color.fromARGB(255, 65, 90, 117), size: 33),
+                        icon: const Icon(Icons.arrow_drop_down_sharp,
+                            color: Color.fromARGB(255, 65, 90, 117), size: 33),
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -122,24 +132,24 @@ class _LandingPageState extends State<LandingPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 80.0, left: 140.0),
+                  padding: const EdgeInsets.only(top: 77.0, left: 140.0),
                   child: SizedBox(
-                    width: size.width/3.3,
+                    width: size.width / 3.3,
                     child: Column(
                       children: [
                         const Center(
                           child: Text('Office for UB Counseling',
-                              style: TextStyle(fontSize: 30,color: Colors.white)),
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.white)),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 23),
                         const Text(
-                        
                           "Want to speak to someone? there are people in our community who can help you.UB counselling have specialized experience in responding to disclosures of sexual harassment and other sexual misconduct. They serve in a neutral role, support all members of the UB community, and are expert resources around the Universitys policies, procedures, and resources in the realm of sexual harassment and other sexual misconduct. Resource Coordinators serve as the primary point of contact for individuals seeking supportive measures, individualized supports that enable UB community members impacted by sexual harassment or other sexual misconduct to access their work or studies.",
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 23),
                         SizedBox(
-                          height: 50,
+                          height: 45,
                           child: ElevatedButton(
                               onPressed: () {},
                               child: const Text('LEARN MORE ABOUT US')),
@@ -151,8 +161,7 @@ class _LandingPageState extends State<LandingPage> {
                 Padding(
                   padding: const EdgeInsets.only(right: 60.0),
                   child: Image.asset('assets/images/ocean.jpg',
-                  height: 500,
-                  width: 700),
+                      height: 500, width: 700),
                 )
               ],
             )),
@@ -166,26 +175,29 @@ class _LandingPageState extends State<LandingPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      height: 300,
-                      width: 530,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 63, 58, 107),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: TextButton(
-                        child: const Text('Report Anonymously',style: TextStyle(color: Colors.white, fontSize: 30)),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(title: formContainer(context));
-                              });
-                        })),
+                        height: 300,
+                        width: 530,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 63, 58, 107),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: TextButton(
+                            child: const Text('Report Anonymously',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 30)),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                        title: formContainer(context));
+                                  });
+                            })),
                     customContainer(
                         title: 'Policies',
                         color: Color.fromARGB(255, 117, 66, 40),
-                        url: 'https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fharrassment-report.appspot.com%2Fo%2FSEXUAL%2520HARASSMENT.docx%3Falt%3Dmedia%26token%3Dd8270a8e-ed32-40bb-a3ea-762f91bcdff6&wdOrigin=BROWSELINK'
-                        ),
+                        url:
+                            'https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fharrassment-report.appspot.com%2Fo%2FSEXUAL%2520HARASSMENT.docx%3Falt%3Dmedia%26token%3Dd8270a8e-ed32-40bb-a3ea-762f91bcdff6&wdOrigin=BROWSELINK'),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -193,111 +205,137 @@ class _LandingPageState extends State<LandingPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      height: 300,
-                      width: 530,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 129, 84, 61),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: TextButton(
-                        child: const Text('Check Progress report',style: TextStyle(color: Colors.white, fontSize: 30)),
-                        onPressed: () {
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///Im herer now
-                          ///
-                          ///
-                          ///
-                          ///progressController
-                          ///
-                          ///
-                          ///
-                          ///
-                          ///
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                    title: Text('Check progress on Report',style: Theme.of(context).textTheme.headlineMedium,),
-                                    content: Form(
-                                      key: formKey,
-                                      child: Column(children: [
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              width: 260,
-                                              height: 35,
-                                              child: TextFormField(
-                                                controller: phone,
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return "Phone required";
-                                                  } else {
-                                                    return null;
-                                                  }
-                                                },
-                                                decoration: InputDecoration(
-                                                  focusedBorder: const OutlineInputBorder(
-                                                      borderSide:
-                                                          BorderSide(color: Color(0xFF707070), width: .5)),
-                                                  border: OutlineInputBorder(
-                                                      borderRadius: BorderRadius.circular(4),
-                                                      borderSide: const BorderSide(
-                                                          color: Color.fromARGB(255, 247, 244, 244),
-                                                          width: .5)),
-                                                  hintText: "Number used to report",
-                                                  hintStyle: const TextStyle(height: 0.5),
-                                                ),
+                        height: 300,
+                        width: 530,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 129, 84, 61),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: TextButton(
+                            child: const Text('Check Progress report',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 30)),
+                            onPressed: () {
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///Im herer now
+                              ///
+                              ///
+                              ///
+                              ///progressController
+                              ///
+                              ///
+                              ///
+                              ///
+                              ///
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        'Check progress on Report',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium,
+                                      ),
+                                      content: Form(
+                                          key: formKey,
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: 260,
+                                                    height: 35,
+                                                    child: TextFormField(
+                                                      controller: phone,
+                                                      validator: (value) {
+                                                        if (value!.isEmpty) {
+                                                          return "Phone required";
+                                                        } else {
+                                                          return null;
+                                                        }
+                                                      },
+                                                      decoration:
+                                                          InputDecoration(
+                                                        focusedBorder:
+                                                            const OutlineInputBorder(
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF707070),
+                                                                    width: .5)),
+                                                        border: OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        4),
+                                                            borderSide:
+                                                                const BorderSide(
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            247,
+                                                                            244,
+                                                                            244),
+                                                                    width: .5)),
+                                                        hintText:
+                                                            "Number used to report",
+                                                        hintStyle:
+                                                            const TextStyle(
+                                                                height: 0.5),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 30),
+                                                  ElevatedButton(
+                                                    child: const Text('Check'),
+                                                    onPressed: () {
+                                                      if (formKey.currentState!
+                                                          .validate()) {}
+                                                    },
+                                                  )
+                                                ],
                                               ),
-                                            ),
-                                            const SizedBox(width: 30),
-                                            ElevatedButton(
-                                              child: const Text('Check'),
-                                              onPressed: (){
-                                                if(formKey.currentState!.validate()){
-
-                                                }
-                                              },
-                                            )
-                                          ],
-                                        ),
-                                      ],)),);
-                              });
-                        })),
-                        Container(
-                      height: 300,
-                      width: 530,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 88, 59, 90),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: TextButton(
-                        child: const Text('File formal Complaint',style: TextStyle(color: Colors.white, fontSize: 30)),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return const AlertDialog(
-                              title: Text('FILE FORMAL COMPLAINT'),
-                              content: Text(
-                                  'The file formal complaint functionality is not avaliable at the moment. We are working to ensure that this functionality is available as soon as posible'));
-                              });
-                        })),
-                    
+                                            ],
+                                          )),
+                                    );
+                                  });
+                            })),
+                    Container(
+                        height: 300,
+                        width: 530,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 88, 59, 90),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: TextButton(
+                            child: const Text('File formal Complaint',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 30)),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const AlertDialog(
+                                        title: Text('FILE FORMAL COMPLAINT'),
+                                        content: Text(
+                                            'The file formal complaint functionality is not avaliable at the moment. We are working to ensure that this functionality is available as soon as posible'));
+                                  });
+                            })),
                   ],
                 )
               ],
@@ -311,12 +349,11 @@ class _LandingPageState extends State<LandingPage> {
   //footer
   Widget footer(size) {
     return Container(
-      padding: const EdgeInsets.only(top: 80),
+        padding: const EdgeInsets.only(top: 80),
         height: 400,
         width: size,
         color: const Color.fromARGB(255, 10, 26, 34),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           SizedBox(
               width: 200,
               child: Column(
@@ -340,7 +377,10 @@ class _LandingPageState extends State<LandingPage> {
               child: Column(
                 children: [
                   const Text('Departments',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.grey)),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Colors.grey)),
                   const SizedBox(
                     height: 15,
                   ),
@@ -351,9 +391,8 @@ class _LandingPageState extends State<LandingPage> {
                     builder: (BuildContext ctx, FollowLink? openLink) {
                       return TextButton(
                         onPressed: openLink,
-                        child: const Text(
-                          'Academic A-Z', style: TextStyle(color: Colors.grey)
-                        ),
+                        child: const Text('Academic A-Z',
+                            style: TextStyle(color: Colors.grey)),
                       );
                     },
                   ),
@@ -365,9 +404,8 @@ class _LandingPageState extends State<LandingPage> {
                     builder: (BuildContext ctx, FollowLink? openLink) {
                       return TextButton(
                         onPressed: openLink,
-                        child: const Text(
-                          'Administration and Support', style: TextStyle(color: Colors.grey)
-                        ),
+                        child: const Text('Administration and Support',
+                            style: TextStyle(color: Colors.grey)),
                       );
                     },
                   ),
@@ -378,7 +416,10 @@ class _LandingPageState extends State<LandingPage> {
               child: Column(
                 children: [
                   const Text('Online Systems',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.grey)),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Colors.grey)),
                   const SizedBox(
                     height: 15,
                   ),
@@ -389,9 +430,8 @@ class _LandingPageState extends State<LandingPage> {
                     builder: (BuildContext ctx, FollowLink? openLink) {
                       return TextButton(
                         onPressed: openLink,
-                        child: const Text(
-                          'My Mmadikolo', style: TextStyle(color: Colors.grey)
-                        ),
+                        child: const Text('My Mmadikolo',
+                            style: TextStyle(color: Colors.grey)),
                       );
                     },
                   ),
@@ -404,8 +444,8 @@ class _LandingPageState extends State<LandingPage> {
                       return TextButton(
                         onPressed: openLink,
                         child: const Text(
-                          'Student Administration System (ASAS)', style: TextStyle(color: Colors.grey)
-                        ),
+                            'Student Administration System (ASAS)',
+                            style: TextStyle(color: Colors.grey)),
                       );
                     },
                   ),
@@ -417,9 +457,8 @@ class _LandingPageState extends State<LandingPage> {
                     builder: (BuildContext ctx, FollowLink? openLink) {
                       return TextButton(
                         onPressed: openLink,
-                        child: const Text(
-                          'Moodle Classes', style: TextStyle(color: Colors.grey)
-                        ),
+                        child: const Text('Moodle Classes',
+                            style: TextStyle(color: Colors.grey)),
                       );
                     },
                   ),
@@ -430,9 +469,8 @@ class _LandingPageState extends State<LandingPage> {
                     builder: (BuildContext ctx, FollowLink? openLink) {
                       return TextButton(
                         onPressed: openLink,
-                        child: const Text(
-                          'Library Catalogue', style: TextStyle(color: Colors.grey)
-                        ),
+                        child: const Text('Library Catalogue',
+                            style: TextStyle(color: Colors.grey)),
                       );
                     },
                   ),
@@ -444,9 +482,8 @@ class _LandingPageState extends State<LandingPage> {
                     builder: (BuildContext ctx, FollowLink? openLink) {
                       return TextButton(
                         onPressed: openLink,
-                        child: const Text(
-                          'Research Management System', style: TextStyle(color: Colors.grey)
-                        ),
+                        child: const Text('Research Management System',
+                            style: TextStyle(color: Colors.grey)),
                       );
                     },
                   ),
@@ -458,9 +495,8 @@ class _LandingPageState extends State<LandingPage> {
                     builder: (BuildContext ctx, FollowLink? openLink) {
                       return TextButton(
                         onPressed: openLink,
-                        child: const Text(
-                          'Residence Management System', style: TextStyle(color: Colors.grey)
-                        ),
+                        child: const Text('Residence Management System',
+                            style: TextStyle(color: Colors.grey)),
                       );
                     },
                   ),
@@ -469,7 +505,7 @@ class _LandingPageState extends State<LandingPage> {
         ]));
   }
 
-  Widget customContainer({title,required Color color,required String url}) {
+  Widget customContainer({title, required Color color, required String url}) {
     return Container(
         height: 300,
         width: 530,
@@ -479,17 +515,16 @@ class _LandingPageState extends State<LandingPage> {
         ),
         child: Center(
           child: Link(
-                            uri: Uri.parse(
-                                url),
-                            target: LinkTarget.blank,
-                            builder: (BuildContext ctx, FollowLink? openLink) {
-                              return TextButton(
-                                onPressed: openLink,
-                                child: Text(title,
-                                    style: const TextStyle(color: Colors.white, fontSize: 30)),
-                              );
-                            },
-                          ),
+            uri: Uri.parse(url),
+            target: LinkTarget.blank,
+            builder: (BuildContext ctx, FollowLink? openLink) {
+              return TextButton(
+                onPressed: openLink,
+                child: Text(title,
+                    style: const TextStyle(color: Colors.white, fontSize: 30)),
+              );
+            },
+          ),
         ));
   }
 
@@ -499,7 +534,10 @@ class _LandingPageState extends State<LandingPage> {
         key: key,
         child: Column(
           children: [
-            Text('Report Anonymously',style: Theme.of(context).textTheme.headlineMedium,),
+            Text(
+              'Report Anonymously',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
             const SizedBox(height: 20),
             SizedBox(
               width: 300,
@@ -596,8 +634,8 @@ class _LandingPageState extends State<LandingPage> {
                   },
                   decoration: InputDecoration(
                     focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color(0xFF707070), width: .5)),
+                        borderSide:
+                            BorderSide(color: Color(0xFF707070), width: .5)),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
                         borderSide: const BorderSide(
@@ -688,41 +726,37 @@ class _LandingPageState extends State<LandingPage> {
                           stateManager.submitAnonymousReport(
                               location: location.text,
                               offender: offender.text,
-                                phone: phone.text,
-                                harassmentType: harassmentType.text,
-                                date: dateController.text,
-                                description: description.text);
+                              phone: phone.text,
+                              harassmentType: harassmentType.text,
+                              date: dateController.text,
+                              description: description.text);
 
                           //sending report to the database
                           Future.delayed(const Duration(seconds: 4), () {
+                            setState(() {
+                              loading = false;
+                            });
 
-                            
-                          
-                          setState(() {
-                            loading = false;
-                          });
-                          
                             //alert when the report has been sent
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Alert"),
-                                content: const Text(
-                                    "The report has been submitted successfully"),
-                                actions: [
-                                  TextButton(
-                                    child: const Text("Close"),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Alert"),
+                                  content: const Text(
+                                      "The report has been submitted successfully"),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text("Close"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           });
-
                         }
                       },
                       child: const Text('Submit report')),
