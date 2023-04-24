@@ -16,9 +16,9 @@ final GoRouter router = GoRouter(
   redirect: (context, state) {
     final stateManagerProvider = Provider.of<StateManager>(context);
     if (stateManagerProvider.isLoggedIn) {
-      return Routes.home.path;
+      return Routes.wrapper.path;
     }
-    return Routes.index.path;
+    return Routes.home.path;
   },
   errorBuilder: (context, state) {
     return const ErrorScreen();

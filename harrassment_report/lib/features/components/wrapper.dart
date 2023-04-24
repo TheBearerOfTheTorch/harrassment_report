@@ -19,7 +19,6 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  
   bool isToggle = false;
   @override
   void initState() {
@@ -45,16 +44,14 @@ class _WrapperState extends State<Wrapper> {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData && snapshot.data != null) {
-                        //print(user);
-                        checkingRole(user, context);
+                        return Home();
                       }
                       if (snapshot.hasError) {
                         return const Text("An unknown error has occured !");
                       }
-                      if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
-                            return const Center(child: CircularProgressIndicator());
-                          }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
                       return Center(child: Text(snapshot.hasError.toString()));
                     });
               }
@@ -77,8 +74,6 @@ class _WrapperState extends State<Wrapper> {
           .collection("users")
           .doc(user.uid)
           .get();
-
-          
 
       setState(() {
         role = snap['userRole'];

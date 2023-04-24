@@ -47,7 +47,7 @@ class StateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void userRole(role){
+  void userRole(role) {
     _role = role;
     notifyListeners();
   }
@@ -106,7 +106,16 @@ class StateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future submitReport({phone, harassmentType, date, description,offender, location}) async {
+  Future submitReport(
+      {bool once = false,
+      bool twice = false,
+      bool more = false,
+      phone,
+      harassmentType,
+      date,
+      description,
+      offender,
+      location}) async {
     final FirebaseFirestore cloud = FirebaseFirestore.instance;
     final User? currentUser = FirebaseAuth.instance.currentUser;
 
@@ -124,17 +133,27 @@ class StateManager extends ChangeNotifier {
         'location': location,
         'offender': offender,
         'status': 'submitted',
+        'priority': once
+            ? 'low'
+            : twice
+                ? 'medium'
+                : 'high',
       }).whenComplete(() async {
         await cloud.collection('report').add({
           'report_name': currentUser.displayName,
           'email': currentUser.email,
           'phone': phone,
-          'offender':offender,
+          'offender': offender,
           'harassmentType': harassmentType,
           'date': date,
           'description': description,
           'location': location,
           'status': 'submitted',
+          'priority': once
+              ? 'low'
+              : twice
+                  ? 'medium'
+                  : 'high',
         });
       });
     } catch (e) {
@@ -144,22 +163,23 @@ class StateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future submitAnonymousReport({offender, location, phone, harassmentType, date, description}) async {
+  Future submitAnonymousReport(
+      {offender, location, phone, harassmentType, date, description}) async {
     final FirebaseFirestore cloud = FirebaseFirestore.instance;
     final User? currentUser = FirebaseAuth.instance.currentUser;
 
     bool loading = false;
 
     try {
-        await cloud.collection('report').doc(phone).set({
-          'status': 'submitted',
-          'phone': phone,
-          'offender':offender,
-          'harassmentType': harassmentType,
-          'date': date,
-          'description': description,
-          'location': location,
-        });
+      await cloud.collection('report').doc(phone).set({
+        'status': 'submitted',
+        'phone': phone,
+        'offender': offender,
+        'harassmentType': harassmentType,
+        'date': date,
+        'description': description,
+        'location': location,
+      });
     } catch (e) {
       // ignore: avoid_print
       print(e);
