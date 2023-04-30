@@ -7,7 +7,7 @@ class Routes {
   static final home = GoRoute(
       path: '/',
       pageBuilder: (BuildContext context, GoRouterState state) {
-        return Home.page();
+        return Counselor.page();
       });
   static final counsels = GoRoute(
       path: '/investigator',

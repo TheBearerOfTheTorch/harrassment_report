@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'app_theme.dart';
-import 'features/screens/admin/admin.dart';
+import 'features/components/components.dart';
 import 'firebase_options.dart';
 import 'navigation/navigation.dart';
 import 'states/states.dart';
@@ -61,9 +61,6 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => _authStateManager),
         ChangeNotifierProvider(create: (context) => _errorStateManager),
         ChangeNotifierProvider(create: (context) => _loadingStateManager),
-        ChangeNotifierProvider(
-          create: (context) => MenuAppController(),
-        ),
         StreamProvider<User?>.value(
           value: _authStateManager.user,
           initialData: null,
@@ -79,14 +76,12 @@ class _MyAppState extends State<MyApp> {
           }
 
           return Material(
-            child: MaterialApp.router(
+            child: MaterialApp(
               theme: theme,
               debugShowCheckedModeBanner: false,
-              // home: Router(
-              //   routerDelegate: _appRouter,
-              // ),
-              routerDelegate: router.routerDelegate,
-              routeInformationParser: router.routeInformationParser,
+              home: Wrapper(),
+              // routerDelegate: router.routerDelegate,
+              // routeInformationParser: router.routeInformationParser,
             ),
           );
         },
