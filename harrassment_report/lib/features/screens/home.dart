@@ -35,7 +35,9 @@ class _HomeState extends State<Home> {
               icon: const Icon(Icons.notification_add),
             ),
             IconButton(
-              onPressed: () => context.read<StateManager>().logout(),
+              onPressed: () {
+                context.read<StateManager>().logout();
+              },
               icon: const Icon(Icons.logout),
             ),
           ],
