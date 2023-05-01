@@ -5,3 +5,4 @@ export 'register_screen.dart';
 export 'error_screen.dart';
 export 'pages/pages.dart';
 export 'investigator/investigator.dart';
+export 'informal_report.dart';

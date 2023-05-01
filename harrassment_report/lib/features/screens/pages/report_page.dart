@@ -102,53 +102,52 @@ class _ReportPageState extends State<ReportPage> {
                         currentstep += 1;
                       });
                     }
-                    if(currentstep == 4){
+                    if (currentstep == 4) {
                       //submit the Form
                       if (key.currentState!.validate()) {
-                                            setState(() {
-                                              loading = true;
-                                            });
+                        setState(() {
+                          loading = true;
+                        });
 
-                                            stateManagement.submitReport(
-                                                once: checkbox1,
-                                                twice: checkbox2,
-                                                more: checkbox3,
-                                                offender: offender.text,
-                                                phone: phone.text,
-                                                location: location.text,
-                                                harassmentType: dropItem,
-                                                date: dateController.text,
-                                                description: description.text);
+                        stateManagement.submitReport(
+                            frequent: checkbox1
+                                ? 'low'
+                                : checkbox2
+                                    ? 'medium'
+                                    : 'high',
+                            madeItClear: checkboxClear1 ? true : false,
+                            offender: offender.text,
+                            phone: phone.text,
+                            location: location.text,
+                            harassmentType: dropItem,
+                            date: dateController.text,
+                            description: description.text);
 
-                                            //sending report to the database
-                                            Future.delayed(
-                                                const Duration(seconds: 4), () {
-                                              setState(() {
-                                                loading = false;
-                                              });
-                                              showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: const Text("Alert"),
-                                                    content: const Text(
-                                                        "The report has been submitted successfully"),
-                                                    actions: [
-                                                      TextButton(
-                                                        child:
-                                                            const Text("Close"),
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            });
-                                          }
+                        //sending report to the database
+                        Future.delayed(const Duration(seconds: 4), () {
+                          setState(() {
+                            loading = false;
+                          });
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Alert"),
+                                content: const Text(
+                                    "The report has been submitted successfully"),
+                                actions: [
+                                  TextButton(
+                                    child: const Text("Close"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        });
+                      }
                     }
                   } else {
                     showDialog(
@@ -437,75 +436,72 @@ class _ReportPageState extends State<ReportPage> {
                         decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(10)),
-                            child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('Provide the offenders details. Example Their full names, and Their contact details',style: TextStyle(color: Colors.white),),
-                            ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Provide the offenders details. Example Their full names, and Their contact details',
+                            style: TextStyle(color: Colors.white),
                           ),
+                        ),
                       ),
                       content: Column(
                         children: [
                           SizedBox(
-                                width: 600,
-                                child: TextFormField(
-                                  controller: offender,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Name required";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFF707070),
-                                            width: .5)),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(4),
-                                        borderSide: const BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 247, 244, 244),
-                                            width: .5)),
-                                    hintText: "Offenders name",
-                                    hintStyle: const TextStyle(height: 0.5),
-                                  ),
-                                ),
+                            width: 600,
+                            child: TextFormField(
+                              controller: offender,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Name required";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xFF707070), width: .5)),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                    borderSide: const BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 247, 244, 244),
+                                        width: .5)),
+                                hintText: "Offenders name",
+                                hintStyle: const TextStyle(height: 0.5),
                               ),
-                              const SizedBox(height: 20),
-                              SizedBox(
-                                width: 600,
-                                child: TextFormField(
-                                  controller: phone,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Phone required";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFF707070),
-                                            width: .5)),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(4),
-                                        borderSide: const BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 247, 244, 244),
-                                            width: .5)),
-                                    hintText: "Phone number",
-                                    hintStyle: const TextStyle(height: 0.5),
-                                  ),
-                                ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            width: 600,
+                            child: TextFormField(
+                              controller: phone,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Phone required";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xFF707070), width: .5)),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                    borderSide: const BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 247, 244, 244),
+                                        width: .5)),
+                                hintText: "Phone number",
+                                hintStyle: const TextStyle(height: 0.5),
                               ),
-
+                            ),
+                          ),
                         ],
                       )),
-                      Step(
+                  Step(
                       title: Container(
                         height: 50,
                         width: MediaQuery.of(context).size.width / 1.1,
@@ -513,17 +509,97 @@ class _ReportPageState extends State<ReportPage> {
                         decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(10)),
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('Uploads evidence that supports your accusations if any',style: TextStyle(color: Colors.white),),
-                            ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Uploads evidence that supports your accusations if any',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
                       ),
                       content: Column(
                         children: [
-                          FilesDragDrop(passListEmpty: (vallsd){
-
-                          },)
+                          FilesDragDrop(
+                            passListEmpty: (vallsd) {},
+                          ),
                           //ImagePickHelper()
+                          SizedBox(
+                            height: 40,
+                            width: 150,
+                            child: loading
+                                ? const Center(
+                                    child: CircularProgressIndicator())
+                                : MaterialButton(
+                                    onPressed: () async {
+                                      if (key.currentState!.validate()) {
+                                        setState(() {
+                                          loading = true;
+                                        });
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text("Alert"),
+                                              content: const Text(
+                                                  "Please confirm that form submission should happen without evidence attachments"),
+                                              actions: [
+                                                TextButton(
+                                                  child: const Text("Confirm"),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+
+                                        stateManagement.submitReport(
+                                            frequent: checkbox1
+                                                ? 'low'
+                                                : checkbox2
+                                                    ? 'medium'
+                                                    : 'high',
+                                            madeItClear:
+                                                checkboxClear1 ? true : false,
+                                            offender: offender.text,
+                                            phone: phone.text,
+                                            location: location.text,
+                                            harassmentType: dropItem,
+                                            date: dateController.text,
+                                            description: description.text);
+
+                                        //sending report to the database
+                                        Future.delayed(
+                                            const Duration(seconds: 4), () {
+                                          setState(() {
+                                            loading = false;
+                                          });
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: const Text("Alert"),
+                                                content: const Text(
+                                                    "The report has been submitted successfully"),
+                                                actions: [
+                                                  TextButton(
+                                                    child: const Text("Close"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        });
+                                      }
+                                    },
+                                    color: Colors.red,
+                                    child: const Text('Submit report')),
+                          )
                         ],
                       ))
                 ]),

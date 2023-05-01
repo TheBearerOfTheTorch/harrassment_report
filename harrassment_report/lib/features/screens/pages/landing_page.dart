@@ -1,5 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
@@ -178,7 +176,7 @@ class _LandingPageState extends State<LandingPage> {
                         height: 300,
                         width: 530,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 63, 58, 107),
+                          color: const Color.fromARGB(255, 63, 58, 107),
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: TextButton(
@@ -323,18 +321,14 @@ class _LandingPageState extends State<LandingPage> {
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: TextButton(
-                            child: const Text('File formal Complaint',
+                            child: const Text('File informal Complaint',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 30)),
                             onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const AlertDialog(
-                                        title: Text('FILE FORMAL COMPLAINT'),
-                                        content: Text(
-                                            'The file formal complaint functionality is not avaliable at the moment. We are working to ensure that this functionality is available as soon as posible'));
-                                  });
+                              ///
+                              ///adding informal reporting here
+                              ///
+                              const InformalReport();
                             })),
                   ],
                 )
