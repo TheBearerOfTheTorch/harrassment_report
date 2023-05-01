@@ -102,52 +102,90 @@ class _ReportPageState extends State<ReportPage> {
                         currentstep += 1;
                       });
                     }
-                    if (currentstep == 4) {
-                      //submit the Form
-                      if (key.currentState!.validate()) {
-                        setState(() {
-                          loading = true;
-                        });
-
-                        stateManagement.submitReport(
-                            frequent: checkbox1
-                                ? 'low'
-                                : checkbox2
-                                    ? 'medium'
-                                    : 'high',
-                            madeItClear: checkboxClear1 ? true : false,
-                            offender: offender.text,
-                            phone: phone.text,
-                            location: location.text,
-                            harassmentType: dropItem,
-                            date: dateController.text,
-                            description: description.text);
-
-                        //sending report to the database
-                        Future.delayed(const Duration(seconds: 4), () {
+                    if (checkboxClear1) {
+                      if (currentstep == 4) {
+                        //submit the Form
+                        if (key.currentState!.validate()) {
                           setState(() {
-                            loading = false;
+                            loading = true;
                           });
+
+                          stateManagement.submitReport(
+                              frequent: checkbox1
+                                  ? 'low'
+                                  : checkbox2
+                                      ? 'medium'
+                                      : 'high',
+                              madeItClear: checkboxClear1 ? true : false,
+                              offender: offender.text,
+                              phone: phone.text,
+                              location: location.text,
+                              harassmentType: dropItem,
+                              date: dateController.text,
+                              description: description.text);
+
+                          //sending report to the database
+                          Future.delayed(const Duration(seconds: 4), () {
+                            setState(() {
+                              loading = false;
+                            });
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Alert"),
+                                  content: const Text(
+                                      "The report has been submitted successfully"),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text("Close"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          });
+                        } else {
                           showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Alert"),
-                                content: const Text(
-                                    "The report has been submitted successfully"),
-                                actions: [
-                                  TextButton(
-                                    child: const Text("Close"),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        });
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text('Form fields warning'),
+                                  content: const Text(
+                                      'The TextFields in the previous stage are not filled'),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text("Close"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              });
+                        }
                       }
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Priority alert'),
+                              content: const Text(
+                                  'The system has identified this to not be a sexual harassmnet according to UB policies'),
+                              actions: [
+                                TextButton(
+                                  child: const Text("Close"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          });
                     }
                   } else {
                     showDialog(
@@ -522,84 +560,6 @@ class _ReportPageState extends State<ReportPage> {
                           FilesDragDrop(
                             passListEmpty: (vallsd) {},
                           ),
-                          //ImagePickHelper()
-                          SizedBox(
-                            height: 40,
-                            width: 150,
-                            child: loading
-                                ? const Center(
-                                    child: CircularProgressIndicator())
-                                : MaterialButton(
-                                    onPressed: () async {
-                                      if (key.currentState!.validate()) {
-                                        setState(() {
-                                          loading = true;
-                                        });
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: const Text("Alert"),
-                                              content: const Text(
-                                                  "Please confirm that form submission should happen without evidence attachments"),
-                                              actions: [
-                                                TextButton(
-                                                  child: const Text("Confirm"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-
-                                        stateManagement.submitReport(
-                                            frequent: checkbox1
-                                                ? 'low'
-                                                : checkbox2
-                                                    ? 'medium'
-                                                    : 'high',
-                                            madeItClear:
-                                                checkboxClear1 ? true : false,
-                                            offender: offender.text,
-                                            phone: phone.text,
-                                            location: location.text,
-                                            harassmentType: dropItem,
-                                            date: dateController.text,
-                                            description: description.text);
-
-                                        //sending report to the database
-                                        Future.delayed(
-                                            const Duration(seconds: 4), () {
-                                          setState(() {
-                                            loading = false;
-                                          });
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Text("Alert"),
-                                                content: const Text(
-                                                    "The report has been submitted successfully"),
-                                                actions: [
-                                                  TextButton(
-                                                    child: const Text("Close"),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        });
-                                      }
-                                    },
-                                    color: Colors.red,
-                                    child: const Text('Submit report')),
-                          )
                         ],
                       ))
                 ]),

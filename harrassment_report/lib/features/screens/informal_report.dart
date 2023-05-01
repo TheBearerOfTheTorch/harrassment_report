@@ -60,16 +60,10 @@ class _InformalReportState extends State<InformalReport> {
     final stateManagement = Provider.of<StateManager>(context);
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: SingleChildScrollView(
+    return SizedBox(
+      height: size.height / 1.1,
+      width: size.width / 1.1,
+      child: SingleChildScrollView(
         child: Form(
           key: key,
           child: Column(
@@ -110,48 +104,70 @@ class _InformalReportState extends State<InformalReport> {
                   currentStep: currentstep - 1,
                   onStepContinue: () {
                     if (checkbox2 || checkbox3) {
-                      if (currentstep < 4) {
-                        setState(() {
-                          currentstep += 1;
-                        });
-                      }
-                      if (currentstep == 4) {
-                        //submit the Form
-                        if (key.currentState!.validate()) {
+                      if (checkboxClear1) {
+                        if (currentstep < 4) {
                           setState(() {
-                            loading = true;
+                            currentstep += 1;
                           });
-
-                          stateManagement.submitInformalReport(
-                              frequent: checkbox1
-                                  ? 'low'
-                                  : checkbox2
-                                      ? 'medium'
-                                      : 'high',
-                              madeItClear: checkboxClear1 ? true : false,
-                              offender: offender.text,
-                              affiliate: affiliate1
-                                  ? 'Student'
-                                  : affiliate2
-                                      ? 'Staff'
-                                      : 'other',
-                              phone: phone.text,
-                              title: location.text,
-                              harassmentType: dropItem,
-                              description: description.text);
-
-                          //sending report to the database
-                          Future.delayed(const Duration(seconds: 4), () {
+                        }
+                        if (currentstep == 4) {
+                          //submit the Form
+                          if (key.currentState!.validate()) {
                             setState(() {
-                              loading = false;
+                              loading = true;
                             });
+
+                            stateManagement.submitInformalReport(
+                                frequent: checkbox1
+                                    ? 'low'
+                                    : checkbox2
+                                        ? 'medium'
+                                        : 'high',
+                                madeItClear: checkboxClear1 ? true : false,
+                                offender: offender.text,
+                                affiliate: affiliate1
+                                    ? 'Student'
+                                    : affiliate2
+                                        ? 'Staff'
+                                        : 'other',
+                                phone: phone.text,
+                                title: location.text,
+                                harassmentType: dropItem,
+                                description: description.text);
+
+                            //sending report to the database
+                            Future.delayed(const Duration(seconds: 4), () {
+                              setState(() {
+                                loading = false;
+                              });
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("Alert"),
+                                    content: const Text(
+                                        "The report has been submitted successfully"),
+                                    actions: [
+                                      TextButton(
+                                        child: const Text("Close"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            });
+                          }
+                          else{
                             showDialog(
                               context: context,
-                              builder: (BuildContext context) {
+                              builder: (context) {
                                 return AlertDialog(
-                                  title: const Text("Alert"),
+                                  title: const Text('Form fields warning'),
                                   content: const Text(
-                                      "The report has been submitted successfully"),
+                                      'The TextFields in the previous stage are not filled'),
                                   actions: [
                                     TextButton(
                                       child: const Text("Close"),
@@ -161,10 +177,28 @@ class _InformalReportState extends State<InformalReport> {
                                     ),
                                   ],
                                 );
-                              },
+                              });
+                          }
+                        }
+                      }
+                      else{
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Priority alert'),
+                              content: const Text(
+                                  'The system has identified this to not be a sexual harassmnet according to UB policies'),
+                              actions: [
+                                TextButton(
+                                  child: const Text("Close"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
                             );
                           });
-                        }
                       }
                     } else {
                       showDialog(
@@ -339,7 +373,7 @@ class _InformalReportState extends State<InformalReport> {
                         content: Column(
                           children: [
                             SizedBox(
-                              width: 110,
+                              width: 300,
                               child: CheckboxListTile(
                                 title: const Text('Student'),
                                 value: affiliate1,
@@ -353,7 +387,7 @@ class _InformalReportState extends State<InformalReport> {
                               ),
                             ),
                             SizedBox(
-                              width: 110,
+                              width: 300,
                               child: CheckboxListTile(
                                 title: const Text('Staff'),
                                 value: affiliate2,
@@ -367,7 +401,7 @@ class _InformalReportState extends State<InformalReport> {
                               ),
                             ),
                             SizedBox(
-                              width: 110,
+                              width: 300,
                               child: CheckboxListTile(
                                 title: const Text('Other'),
                                 value: affiliate3,
@@ -503,91 +537,6 @@ class _InformalReportState extends State<InformalReport> {
                             FilesDragDrop(
                               passListEmpty: (vallsd) {},
                             ),
-                            //ImagePickHelper()
-                            SizedBox(
-                              height: 40,
-                              width: 150,
-                              child: loading
-                                  ? const Center(
-                                      child: CircularProgressIndicator())
-                                  : MaterialButton(
-                                      onPressed: () async {
-                                        if (key.currentState!.validate()) {
-                                          setState(() {
-                                            loading = true;
-                                          });
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Text("Alert"),
-                                                content: const Text(
-                                                    "Please confirm that form submission should happen without evidence attachments"),
-                                                actions: [
-                                                  TextButton(
-                                                    child:
-                                                        const Text("Confirm"),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-
-                                          stateManagement.submitInformalReport(
-                                              frequent: checkbox1
-                                                  ? 'low'
-                                                  : checkbox2
-                                                      ? 'medium'
-                                                      : 'high',
-                                              madeItClear:
-                                                  checkboxClear1 ? true : false,
-                                              affiliate: affiliate1
-                                                  ? 'Student'
-                                                  : affiliate2
-                                                      ? 'Staff'
-                                                      : 'other',
-                                              offender: offender.text,
-                                              phone: phone.text,
-                                              title: location.text,
-                                              harassmentType: dropItem,
-                                              description: description.text);
-
-                                          //sending report to the database
-                                          Future.delayed(
-                                              const Duration(seconds: 4), () {
-                                            setState(() {
-                                              loading = false;
-                                            });
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  title: const Text("Alert"),
-                                                  content: const Text(
-                                                      "The report has been submitted successfully"),
-                                                  actions: [
-                                                    TextButton(
-                                                      child:
-                                                          const Text("Close"),
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                          });
-                                        }
-                                      },
-                                      color: Colors.red,
-                                      child: const Text('Submit report')),
-                            )
                           ],
                         ))
                   ]),

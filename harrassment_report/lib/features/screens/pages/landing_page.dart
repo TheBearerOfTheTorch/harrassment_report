@@ -45,7 +45,7 @@ class _LandingPageState extends State<LandingPage> {
             height: 300,
             width: size.width,
             decoration:
-                const BoxDecoration(color: Color.fromARGB(255, 147, 218, 252)),
+                const BoxDecoration(color: Colors.white),
             child: Column(children: [
               Padding(
                   padding: const EdgeInsets.only(left: 20, top: 20),
@@ -67,7 +67,25 @@ class _LandingPageState extends State<LandingPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text('About our system'),
+                                content: const Text(
+                                    'Here we can display any messages for people to learn more about the system'),
+                                actions: [
+                                  TextButton(
+                                    child: const Text("Close"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              );
+                            });
+                      },
                       label: const Text(
                         'about us',
                         style: TextStyle(
@@ -123,7 +141,7 @@ class _LandingPageState extends State<LandingPage> {
               ),
             ])),
         Container(
-            height: 600,
+            height: 450,
             width: size.width,
             color: const Color.fromARGB(255, 36, 2, 43),
             child: Row(
@@ -142,14 +160,32 @@ class _LandingPageState extends State<LandingPage> {
                         ),
                         const SizedBox(height: 23),
                         const Text(
-                          "Want to speak to someone? there are people in our community who can help you.UB counselling have specialized experience in responding to disclosures of sexual harassment and other sexual misconduct. They serve in a neutral role, support all members of the UB community, and are expert resources around the Universitys policies, procedures, and resources in the realm of sexual harassment and other sexual misconduct. Resource Coordinators serve as the primary point of contact for individuals seeking supportive measures, individualized supports that enable UB community members impacted by sexual harassment or other sexual misconduct to access their work or studies.",
+                          "Want to speak to someone? there are people in our community who can help you.UB counselling have specialized experience in responding to disclosures of sexual harassment and other sexual misconduct. They serve in a neutral role, support all members of the UB community, and are expert resources around the Universitys policies, procedures, and resources in the realm of sexual harassment and other sexual misconduct. ",
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                         const SizedBox(height: 23),
                         SizedBox(
                           height: 45,
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text('About our system'),
+                                        content: const Text(
+                                            'Here we can display any messages for people to learn more about the system'),
+                                        actions: [
+                                          TextButton(
+                                            child: const Text("Close"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          )
+                                        ],
+                                      );
+                                    });
+                              },
                               child: const Text('LEARN MORE ABOUT US')),
                         )
                       ],
@@ -159,7 +195,7 @@ class _LandingPageState extends State<LandingPage> {
                 Padding(
                   padding: const EdgeInsets.only(right: 60.0),
                   child: Image.asset('assets/images/ocean.jpg',
-                      height: 500, width: 700),
+                      height: 400, width: 700),
                 )
               ],
             )),
@@ -325,10 +361,14 @@ class _LandingPageState extends State<LandingPage> {
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 30)),
                             onPressed: () {
-                              ///
-                              ///adding informal reporting here
-                              ///
-                              const InformalReport();
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return const AlertDialog(
+                                      title: Text('File informal report'),
+                                      content: InformalReport(),
+                                    );
+                                  });
                             })),
                   ],
                 )
