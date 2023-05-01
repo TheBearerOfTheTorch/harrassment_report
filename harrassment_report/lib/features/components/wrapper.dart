@@ -72,12 +72,19 @@ class _WrapperState extends State<Wrapper> {
           .get();
 
       if (snap['userRole'] == 'user') {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Home()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const Home()));
         //return Routes.home.path;
       }
 
-      if(snap['userRole'] == 'admin'){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const AdminPage()));
+      if (snap['userRole'] == 'admin') {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const AdminPage()));
+      }
+
+      if (snap['userRole'] == 'investigator') {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Counselor()));
       }
     }
     return LandingPage();

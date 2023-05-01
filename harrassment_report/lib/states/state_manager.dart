@@ -107,9 +107,8 @@ class StateManager extends ChangeNotifier {
   }
 
   Future submitReport(
-      {bool once = false,
-      bool twice = false,
-      bool more = false,
+      {frequent,
+      madeItClear,
       phone,
       harassmentType,
       date,
@@ -133,11 +132,7 @@ class StateManager extends ChangeNotifier {
         'location': location,
         'offender': offender,
         'status': 'submitted',
-        'priority': once
-            ? 'low'
-            : twice
-                ? 'medium'
-                : 'high',
+        'priority': frequent,
       }).whenComplete(() async {
         await cloud.collection('report').add({
           'report_name': currentUser.displayName,
@@ -149,12 +144,40 @@ class StateManager extends ChangeNotifier {
           'description': description,
           'location': location,
           'status': 'submitted',
-          'priority': once
-              ? 'low'
-              : twice
-                  ? 'medium'
-                  : 'high',
+          'priority': frequent,
         });
+      });
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+    notifyListeners();
+  }
+
+  Future submitInformalReport(
+      {frequent,
+      madeItClear,
+      phone,
+      harassmentType,
+      affiliate,
+      description,
+      offender,
+      title}) async {
+    final FirebaseFirestore cloud = FirebaseFirestore.instance;
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+
+    //saving details to database
+    //phone, harassmentType, date, description
+    try {
+      await cloud.collection('report').add({
+        'phone': phone,
+        'offender': offender,
+        'harassmentType': harassmentType,
+        'affiliate': affiliate,
+        'description': description,
+        'title': title,
+        'status': 'submitted',
+        'priority': frequent,
       });
     } catch (e) {
       // ignore: avoid_print
